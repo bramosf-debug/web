@@ -1,897 +1,490 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-  <title>NEBULA CORE | Estudio de Innovación Digital | Experiencia Inmersiva</title>
-  <!-- Three.js core + addons avanzados -->
-  <script type="importmap">
-    {
-      "imports": {
-        "three": "https://unpkg.com/three@0.128.0/build/three.module.js",
-        "three/addons/": "https://unpkg.com/three@0.128.0/examples/jsm/"
-      }
-    }
-  </script>
-  <!-- Google Fonts tipografía premium -->
-  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700;800&family=Inter:opsz,wght@14..32,300;14..32,400;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
-  <style>
-    /* ================================================================
-       ESTILOS PROFESIONALES - MÁS DE 250 LÍNEAS DE CSS PREMIUM
-       ================================================================ */
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      user-select: none;
-    }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NEBULA CORE | Experiencia Inmersiva</title>
 
-    body {
-      font-family: 'Space Grotesk', 'Inter', sans-serif;
-      background-color: #03030f;
-      color: #f0f3ff;
-      overflow-x: hidden;
-      font-weight: 400;
-    }
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;600;800&display=swap" rel="stylesheet">
 
-    /* Canvas 3D fullscreen */
-    #canvas-container {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      z-index: 0;
-      outline: none;
-    }
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{
+  font-family:'Space Grotesk',sans-serif;
+  background: linear-gradient(rgba(2,2,10,0.88), rgba(2,2,10,0.88)), url('https://picsum.photos/seed/nebula-core/1920/1080') center/cover no-repeat fixed;
+  color:white;
+  overflow-x:hidden;
+}
 
-    /* Overlay atmosférico con viñeta y gradiente */
-    .vignette-overlay {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: radial-gradient(circle at center, transparent 35%, rgba(0,0,0,0.75) 100%);
-      pointer-events: none;
-      z-index: 1;
-    }
+/* NAV */
+.navbar{
+  position:fixed;
+  top:20px;
+  left:50%;
+  transform:translateX(-50%);
+  display:flex;
+  gap:10px;
+  padding:10px 20px;
+  border-radius:50px;
+  backdrop-filter:blur(20px);
+  background:rgba(0,0,20,0.4);
+  z-index:1000;
+}
+.navbar button{
+  background:none;
+  border:none;
+  color:white;
+  padding:8px 14px;
+  border-radius:20px;
+  cursor:pointer;
+}
+.navbar button:hover{
+  background:rgba(100,150,255,0.2);
+}
 
-    .scanlines {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: repeating-linear-gradient(0deg, rgba(0,0,0,0.03) 0px, rgba(0,0,0,0.03) 2px, transparent 2px, transparent 6px);
-      pointer-events: none;
-      z-index: 2;
-      opacity: 0.3;
-    }
+/* HERO */
+.hero{
+  height:100vh;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  flex-direction:column;
+  text-align:center;
+}
+.title{
+  font-size:5rem;
+  background:linear-gradient(45deg,#fff,#6ea8ff);
+  -webkit-background-clip:text;
+  color:transparent;
+}
+.tag{
+  opacity:.7;
+  margin-top:10px;
+}
 
-    /* Navbar ultra premium */
-    .navbar {
-      position: fixed;
-      top: 28px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 88%;
-      max-width: 1350px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 0.9rem 2.5rem;
-      background: rgba(8, 12, 28, 0.55);
-      backdrop-filter: blur(20px);
-      border-radius: 100px;
-      border: 0.5px solid rgba(80, 150, 255, 0.3);
-      box-shadow: 0 15px 40px rgba(0,0,0,0.4), 0 0 0 0.5px rgba(255,255,255,0.05) inset;
-      z-index: 1000;
-      transition: all 0.3s ease;
-    }
+/* SECTIONS */
+section{
+  padding:100px 10%;
+  min-height:100vh;
+}
 
-    .logo {
-      font-family: 'Space Grotesk', monospace;
-      font-size: 1.8rem;
-      font-weight: 700;
-      background: linear-gradient(135deg, #ffffff, #8bb5ff, #c89eff);
-      -webkit-background-clip: text;
-      background-clip: text;
-      color: transparent;
-      letter-spacing: -0.02em;
-    }
+/* CARDS */
+.grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
+  gap:20px;
+}
+.card{
+  background:rgba(20,30,60,0.4);
+  padding:20px;
+  border-radius:20px;
+  transition:.3s;
+}
+.card:hover{
+  transform:translateY(-10px);
+  box-shadow:0 10px 30px rgba(0,0,0,.5);
+}
 
-    .menu {
-      display: flex;
-      gap: 0.3rem;
-      flex-wrap: wrap;
-      justify-content: flex-end;
-    }
+/* GALLERY */
+.gallery img{
+  width:100%;
+  border-radius:15px;
+  transition:.3s;
+}
+.gallery img:hover{
+  transform:scale(1.05);
+}
 
-    .menu button {
-      background: transparent;
-      border: none;
-      font-family: 'Inter', sans-serif;
-      font-weight: 500;
-      font-size: 0.95rem;
-      padding: 0.55rem 1.4rem;
-      margin: 0 0.15rem;
-      border-radius: 60px;
-      color: #eef3ff;
-      transition: all 0.25s;
-      cursor: pointer;
-      letter-spacing: 0.3px;
-      backdrop-filter: blur(5px);
-      position: relative;
-    }
+/* CONTACT */
+.contact{
+  text-align:center;
+}
+button.copy{
+  margin-top:20px;
+  padding:10px 20px;
+  border:none;
+  border-radius:30px;
+  cursor:pointer;
+  background:#3a6cff;
+  color:white;
+}
 
-    .menu button.active-nav {
-      background: rgba(100, 170, 255, 0.25);
-      color: white;
-      text-shadow: 0 0 8px rgba(80,160,255,0.6);
-      border-bottom: 1px solid rgba(100,180,255,0.6);
-    }
+/* ANIMACIONES */
+.fade{
+  opacity:0;
+  transform:translateY(30px);
+  transition:1s;
+}
+.fade.show{
+  opacity:1;
+  transform:translateY(0);
+}
 
-    .menu button:hover {
-      background: rgba(100, 170, 255, 0.2);
-      color: white;
-      text-shadow: 0 0 8px rgba(80,160,255,0.6);
-      transform: translateY(-2px);
-    }
+/* CHAT IA */
+.chat-btn {
+  position: fixed;
+  bottom: 40px;
+  right: 40px;
+  background: linear-gradient(45deg, #3a6cff, #6ea8ff);
+  color: white;
+  width: 68px;
+  height: 68px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2.2rem;
+  box-shadow: 0 15px 35px rgba(58,108,255,0.5);
+  z-index: 9999;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+.chat-btn:hover {
+  transform: scale(1.12) rotate(12deg);
+}
 
-    /* Contenido principal */
-    .container {
-      position: relative;
-      z-index: 10;
-      max-width: 1450px;
-      margin: 0 auto;
-      padding: 8rem 3rem 5rem;
-    }
+.chat-window {
+  position: fixed;
+  bottom: 125px;
+  right: 30px;
+  width: 420px;
+  height: 620px;
+  background: rgba(10,15,35,0.97);
+  border-radius: 24px;
+  overflow: hidden;
+  box-shadow: 0 25px 70px rgba(0,0,0,0.8);
+  display: none;
+  flex-direction: column;
+  z-index: 10000;
+  border: 1px solid rgba(110,168,255,0.3);
+}
 
-    /* Transición de tabs premium */
-    .tab {
-      display: none;
-      opacity: 0;
-      animation: cinematicReveal 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-    }
+.chat-header {
+  background: linear-gradient(90deg, #02020a, #1a2a5e);
+  padding: 18px 22px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.chat-header h3 {
+  margin: 0;
+  font-size: 1.3rem;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
 
-    .tab.active {
-      display: block;
-    }
+.chat-messages {
+  flex: 1;
+  padding: 22px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  background: rgba(0,0,0,0.3);
+}
 
-    @keyframes cinematicReveal {
-      0% { opacity: 0; transform: translateY(35px) scale(0.98); filter: blur(2px); }
-      100% { opacity: 1; transform: translateY(0) scale(1); filter: blur(0); }
-    }
+.message {
+  max-width: 85%;
+  padding: 14px 20px;
+  border-radius: 22px;
+  font-size: 1.05rem;
+  line-height: 1.45;
+}
+.message.user {
+  align-self: flex-end;
+  background: linear-gradient(45deg, #3a6cff, #6ea8ff);
+  color: white;
+  border-bottom-right-radius: 6px;
+}
+.message.ai {
+  align-self: flex-start;
+  background: rgba(255,255,255,0.13);
+  color: white;
+  border-bottom-left-radius: 6px;
+}
 
-    /* Hero sección majestuosa */
-    .hero {
-      min-height: 75vh;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      text-align: center;
-      gap: 1.5rem;
-    }
+.typing {
+  align-self: flex-start;
+  background: rgba(255,255,255,0.1);
+  padding: 14px 20px;
+  border-radius: 22px;
+  font-style: italic;
+  color: rgba(255,255,255,0.7);
+}
 
-    .title {
-      font-size: clamp(3.2rem, 10vw, 7rem);
-      font-weight: 800;
-      font-family: 'Space Grotesk', sans-serif;
-      background: linear-gradient(125deg, #FFFFFF, #9bc0ff, #d6aeff);
-      -webkit-background-clip: text;
-      background-clip: text;
-      color: transparent;
-      letter-spacing: -0.02em;
-      text-shadow: 0 0 30px rgba(70,130,255,0.4);
-    }
+.chat-input {
+  padding: 16px 20px;
+  background: #02020a;
+  display: flex;
+  gap: 12px;
+  border-top: 1px solid rgba(255,255,255,0.1);
+}
+.chat-input input {
+  flex: 1;
+  padding: 14px 24px;
+  border: none;
+  border-radius: 50px;
+  background: rgba(255,255,255,0.1);
+  color: white;
+  font-size: 1.05rem;
+}
+.chat-input input:focus {
+  outline: none;
+  background: rgba(255,255,255,0.15);
+}
+.chat-input button {
+  background: #3a6cff;
+  border: none;
+  color: white;
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.7rem;
+  cursor: pointer;
+  transition: 0.2s;
+}
+.chat-input button:hover {
+  background: #6ea8ff;
+  transform: scale(1.1);
+}
 
-    .hero-tagline {
-      font-size: 1.2rem;
-      font-weight: 400;
-      max-width: 680px;
-      background: rgba(10, 20, 45, 0.45);
-      backdrop-filter: blur(14px);
-      padding: 0.8rem 2rem;
-      border-radius: 70px;
-      border: 0.5px solid rgba(100,180,255,0.4);
-    }
-
-    h2 {
-      font-size: 2.9rem;
-      font-weight: 600;
-      font-family: 'Space Grotesk', monospace;
-      margin-bottom: 2rem;
-      background: linear-gradient(120deg, #e0ecff, #aac5ff);
-      -webkit-background-clip: text;
-      background-clip: text;
-      color: transparent;
-      border-left: 5px solid #5f9eff;
-      padding-left: 1.5rem;
-    }
-
-    h3 {
-      font-size: 1.5rem;
-      margin-bottom: 0.8rem;
-      color: #bdd4ff;
-    }
-
-    .grid-ultra {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-      gap: 2.4rem;
-      margin: 2.5rem 0;
-    }
-
-    .card-lux {
-      background: rgba(12, 20, 45, 0.5);
-      backdrop-filter: blur(18px);
-      border-radius: 2rem;
-      border: 1px solid rgba(70, 140, 255, 0.3);
-      padding: 2.2rem;
-      transition: all 0.4s cubic-bezier(0.2, 0.9, 0.4, 1.1);
-      overflow: hidden;
-    }
-
-    .card-lux:hover {
-      transform: translateY(-10px);
-      border-color: #8bb5ff;
-      box-shadow: 0 25px 45px -12px rgba(0, 120, 255, 0.4);
-      background: rgba(22, 32, 65, 0.65);
-    }
-
-    .skill-chip {
-      display: inline-block;
-      background: rgba(80, 140, 255, 0.2);
-      padding: 0.3rem 1.1rem;
-      border-radius: 40px;
-      font-size: 0.8rem;
-      margin: 0.3rem 0.2rem;
-      border-left: 1px solid #5f9eff;
-      font-weight: 500;
-    }
-
-    .project-img {
-      width: 100%;
-      height: 210px;
-      object-fit: cover;
-      border-radius: 1.2rem;
-      margin-bottom: 1rem;
-      transition: 0.35s;
-      filter: brightness(0.92) contrast(1.05);
-    }
-
-    .project-img:hover {
-      filter: brightness(1.02);
-      transform: scale(1.01);
-    }
-
-    .gallery-cinema {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
-      gap: 2rem;
-    }
-
-    .gallery-cinema img {
-      width: 100%;
-      height: 260px;
-      object-fit: cover;
-      border-radius: 1.5rem;
-      transition: 0.4s;
-      border: 1px solid rgba(255,255,255,0.08);
-      cursor: pointer;
-    }
-
-    .gallery-cinema img:hover {
-      transform: scale(1.02);
-      border-color: #6ea8ff;
-      box-shadow: 0 20px 30px -12px rgba(0,0,0,0.5);
-    }
-
-    .testimonial-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 1.8rem;
-      margin-top: 2rem;
-    }
-
-    .testimonial-card {
-      background: rgba(20, 28, 55, 0.6);
-      backdrop-filter: blur(12px);
-      border-radius: 1.5rem;
-      padding: 1.8rem;
-      border-left: 3px solid #5f9eff;
-    }
-
-    .timeline {
-      display: flex;
-      flex-direction: column;
-      gap: 1.2rem;
-      margin-top: 2rem;
-    }
-    .timeline-item {
-      display: flex;
-      gap: 1.5rem;
-      align-items: baseline;
-      background: rgba(10,18,40,0.5);
-      padding: 1rem 1.5rem;
-      border-radius: 1rem;
-    }
-    .timeline-year {
-      font-weight: 800;
-      color: #7aaef0;
-      min-width: 80px;
-      font-size: 1.2rem;
-    }
-
-    .contact-premium {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 1.8rem;
-      text-align: center;
-    }
-
-    .social-ring {
-      display: flex;
-      gap: 2rem;
-      margin: 1rem 0;
-      flex-wrap: wrap;
-      justify-content: center;
-    }
-
-    .social-icon {
-      background: rgba(20, 30, 65, 0.7);
-      backdrop-filter: blur(12px);
-      width: 68px;
-      height: 68px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      border-radius: 100px;
-      font-size: 1.9rem;
-      transition: 0.25s;
-      border: 1px solid rgba(100,180,255,0.6);
-      cursor: pointer;
-    }
-
-    .social-icon:hover {
-      background: #5f9eff;
-      color: #0a0a1a;
-      transform: scale(1.1);
-      border-color: white;
-    }
-
-    hr {
-      width: 70%;
-      border-color: rgba(100,150,255,0.3);
-      margin: 1rem auto;
-    }
-
-    footer {
-      margin-top: 4rem;
-      text-align: center;
-      font-size: 0.8rem;
-      opacity: 0.55;
-      letter-spacing: 0.5px;
-    }
-
-    @media (max-width: 850px) {
-      .navbar {
-        width: 94%;
-        padding: 0.6rem 1.2rem;
-        top: 16px;
-      }
-      .menu button {
-        padding: 0.3rem 0.9rem;
-        font-size: 0.75rem;
-      }
-      .container {
-        padding: 7rem 1.5rem 3rem;
-      }
-      h2 {
-        font-size: 2rem;
-      }
-    }
-  </style>
+.phone-btn-container {
+  padding: 12px 22px 20px;
+  background: #02020a;
+  text-align: center;
+  border-top: 1px solid rgba(255,255,255,0.1);
+}
+.phone-btn-container button {
+  background: #22c55e;
+  color: white;
+  border: none;
+  padding: 13px 28px;
+  border-radius: 50px;
+  font-size: 1.05rem;
+  cursor: pointer;
+  width: 100%;
+  transition: 0.3s;
+}
+.phone-btn-container button:hover {
+  background: #16a34a;
+  transform: translateY(-2px);
+}
+</style>
 </head>
+
 <body>
 
-  <div id="canvas-container"></div>
-  <div class="vignette-overlay"></div>
-  <div class="scanlines"></div>
+<!-- NAV -->
+<div class="navbar">
+<button onclick="go(0)">Inicio</button>
+<button onclick="go(1)">Historia</button>
+<button onclick="go(2)">Arte</button>
+<button onclick="go(3)">Galería</button>
+<button onclick="go(4)">Contacto</button>
+</div>
 
-  <nav class="navbar">
-    <div class="logo">✧WEB✧</div>
-    <div class="menu">
-      <button data-tab="0" class="active-nav">INICIO</button>
-      <button data-tab="1">HISTORIA</button>
-      <button data-tab="2">ARTE</button>
-      <button data-tab="3">GALERIA</button>
-      <button data-tab="4">DESARROLLO</button>
-      <button data-tab="5">CONTACT</button>
+<!-- HERO -->
+<section class="hero">
+<h1 class="title">NEBULA CORE</h1>
+<p class="tag">Tecnología · Arte · Futuro</p>
+</section>
+
+<!-- HISTORIA -->
+<section class="fade">
+<h2>Historia</h2>
+<div class="grid">
+<div class="card"><h3>Inicio</h3><p>Proyecto enfocado en experiencias digitales inmersivas usando WebGL y diseño avanzado.</p></div>
+<div class="card"><h3>Evolución</h3><p>Integración de 3D, animaciones y sistemas interactivos modernos.</p></div>
+<div class="card"><h3>Futuro</h3><p>Exploración de inteligencia artificial + gráficos en tiempo real.</p></div>
+</div>
+</section>
+
+<!-- ARTE -->
+<section class="fade">
+<h2>Arte Digital</h2>
+<div class="grid">
+<div class="card">Visuales generativos</div>
+<div class="card">Shaders avanzados</div>
+<div class="card">Experiencias inmersivas</div>
+</div>
+</section>
+
+<!-- GALERIA -->
+<section class="fade gallery">
+<h2>Galería</h2>
+<div class="grid">
+<img src="https://picsum.photos/500/300?1">
+<img src="https://picsum.photos/500/300?2">
+<img src="https://picsum.photos/500/300?3">
+<img src="https://picsum.photos/500/300?4">
+</div>
+</section>
+
+<!-- CONTACT -->
+<section class="fade contact">
+<h2>Contacto</h2>
+<p>studio@nebulacore.space</p>
+<button class="copy" onclick="copy()">Copiar correo</button>
+</section>
+
+<!-- CHAT IA -->
+<div class="chat-btn" onclick="toggleChat()" title="Habla con Nebula AI">🤖</div>
+
+<div class="chat-window" id="chatWindow">
+  <div class="chat-header">
+    <div style="display:flex; align-items:center; gap:10px;">
+      <span style="font-size:1.7rem;">🌌</span>
+      <h3>Nebula AI • Gemini</h3>
     </div>
-  </nav>
-
-  <div class="container">
-    <section id="tab-0" class="tab active hero">
-      <h1 class="title">BIENVENIDOS A MI MUNDO</h1>
-      <div class="hero-tagline">Ingeniería creativa · Paisajes digitales inmersivos · Tecnología con alma</div>
-      <div style="margin-top: 1.2rem; font-size: 0.85rem; letter-spacing: 3px; opacity:0.7;">WEBGL 2.0 • REAL-TIME RAYMARCHING • NEURAL RENDER</div>
-    </section>
-
-    <section id="tab-1" class="tab">
-      <h2>Manifiesto creativo</h2>
-      <div class="grid-ultra">
-        <div class="card-lux">
-          <h3 style="color:#9bc0ff;">◈ Trayectoria</h3>
-          <p>TXT</p>
-          <br>
-          <p>Colaboraciones con estudios internacionales como <strong>Studio Omni</strong> y <strong>Future Lab</strong>, creando experiencias inmersivas para museos y marcas premium.</p>
-        </div>
-        <div class="card-lux">
-          <h3 style="color:#9bc0ff;">⚡ Dominio técnico</h3>
-          <div>
-            <span class="skill-chip">Three.js / WebGL</span>
-            <span class="skill-chip">GLSL Shaders</span>
-            <span class="skill-chip">React Three Fiber</span>
-            <span class="skill-chip">Blender API</span>
-            <span class="skill-chip">Node.js</span>
-            <span class="skill-chip">UX Motion Design</span>
-            <span class="skill-chip">WebGPU</span>
-            <span class="skill-chip">GSAP</span>
-          </div>
-          <br>
-          <p>TXT</p>
-        </div>
-        <div class="card-lux">
-          <h3 style="color:#9bc0ff;">🌌 Visión</h3>
-          <p>TXT</p>
-          <br>
-          <p>TXT</p>
-        </div>
-      </div>
-      <h2 style="margin-top: 3rem;">Línea de tiempo</h2>
-      <div class="timeline">
-        <div class="timeline-item"><span class="timeline-year">2017</span><span>TXT</span></div>
-        <div class="timeline-item"><span class="timeline-year">2019</span><span>TXT</span></div>
-        <div class="timeline-item"><span class="timeline-year">2021</span><span>TXT</span></div>
-        <div class="timeline-item"><span class="timeline-year">2024</span><span>TXT</span></div>
-        <div class="timeline-item"><span class="timeline-year">2025</span><span>TXT</span></div>
-      </div>
-    </section>
-
-    <section id="tab-2" class="tab">
-      <h2>Obras maestras</h2>
-      <div class="grid-ultra">
-        <div class="card-lux">
-          <img class="project-img" src="https://picsum.photos/id/104/700/450" alt="particle nebula">
-          <h3>Núcleo Estelar</h3>
-          <p>TXT</p>
-          <div><span class="skill-chip">#ParticleSystem</span><span class="skill-chip">#ComputeShader</span></div>
-        </div>
-        <div class="card-lux">
-          <img class="project-img" src="https://picsum.photos/id/29/700/450" alt="arquitectura fluida">
-          <h3>Morfogénesis</h3>
-          <p>TXT</p>
-          <div><span class="skill-chip">#WebAudioAPI</span><span class="skill-chip">#Three.js</span></div>
-        </div>
-        <div class="card-lux">
-          <img class="project-img" src="https://picsum.photos/id/22/700/450" alt="cosmic dashboard">
-          <h3>Observatorio Cuántico</h3>
-          <p>TXT</p>
-          <div><span class="skill-chip">#DataViz</span><span class="skill-chip">#WebSocket</span></div>
-        </div>
-        <div class="card-lux">
-          <img class="project-img" src="https://picsum.photos/id/42/700/450" alt="nebulosa abstracta">
-          <h3>Nebulosa Sintética</h3>
-          <p>TXT</p>
-          <div><span class="skill-chip">#Raymarching</span><span class="skill-chip">#Volumetric</span></div>
-        </div>
-      </div>
-    </section>
-
-    <section id="tab-3" class="tab">
-      <h2>Galería etérea</h2>
-      <div class="gallery-cinema">
-        <img src="https://picsum.photos/id/119/800/600" alt="nebula dream">
-        <img src="https://picsum.photos/id/96/800/600" alt="reflection cosmos">
-        <img src="https://picsum.photos/id/42/800/600" alt="piano astral">
-        <img src="https://picsum.photos/id/26/800/600" alt="venus path">
-        <img src="https://picsum.photos/id/15/800/600" alt="aurora borealis">
-        <img src="https://picsum.photos/id/169/800/600" alt="solar flare">
-        <img src="https://picsum.photos/id/104/800/600" alt="deep space">
-        <img src="https://picsum.photos/id/29/800/600" alt="cosmic architecture">
-      </div>
-      <p style="text-align:center; margin-top:2rem; font-size:0.85rem; opacity:0.7;">⤫ cada fotograma es una ventana al infinito ⤫</p>
-    </section>
-
-    <section id="tab-4" class="tab">
-      <h2>Voces de la industria</h2>
-      <div class="testimonial-grid">
-        <div class="testimonial-card">
-          <p>TXT</p>
-          <br><strong>— TXT</strong>
-        </div>
-        <div class="testimonial-card">
-          <p>TXT</p>
-          <br><strong>— TXT</strong>
-        </div>
-        <div class="testimonial-card">
-          <p>TXT</p>
-          <br><strong>— TXT</strong>
-        </div>
-      </div>
-    </section>
-
-    <section id="tab-5" class="tab">
-      <h2>Conectividad</h2>
-      <div class="card-lux contact-premium">
-        <p style="font-size:1.3rem;">¿Proyecto visionario? Hablemos de código, arte y futuro.</p>
-        <div class="social-ring">
-          <div class="social-icon" onclick="copyProfessionalContact()">✉️</div>
-          <div class="social-icon" onclick="alert('LinkedIn: /in/nebulacore · red profesional activa')">🔗</div>
-          <div class="social-icon" onclick="alert('GitHub: nebulacore · repositorios experimentales')">🐙</div>
-          <div class="social-icon" onclick="alert('Behance portfolio: award-winning projects')">✨</div>
-          <div class="social-icon" onclick="alert('Instagram: @nebulacore · visual diary')">📷</div>
-        </div>
-        <hr>
-        <p><strong>TXT</strong> ·TXT</p>
-        <p>📍TXT</p>
-        <button id="copyProBtn" style="background: linear-gradient(100deg, #2b4b8f, #1f3460); border: none; padding: 10px 28px; border-radius: 50px; color: white; font-weight: 600; margin-top: 12px; cursor: pointer; font-family: inherit; letter-spacing: 0.5px;">📋 Copiar dirección</button>
-        <span id="copySuccessMsg" style="font-size:0.8rem; color:#8bcbff;"></span>
-      </div>
-    </section>
-    <footer>
-      <p>© 2026 WEB/UDAYRF — Investigación en nuevos medios digitales · v1.0 </p>
-    </footer>
+    <button onclick="toggleChat()" style="background:none;border:none;color:white;font-size:1.9rem;cursor:pointer;">×</button>
   </div>
+  
+  <div class="chat-messages" id="chatMessages"></div>
+  
+  <div class="chat-input">
+    <input type="text" id="chatInput" placeholder="Pregúntame cualquier cosa..." onkeypress="if(event.key==='Enter') sendMessage()">
+    <button onclick="sendMessage()">↑</button>
+  </div>
+  
+  <div class="phone-btn-container">
+    <button onclick="requestPhone()">
+      📱 Enviar mi número al WhatsApp
+    </button>
+  </div>
+</div>
 
-  <script type="module">
-    // ================================================================
-    // MOTOR 3D PROFESIONAL - PLANETA FOTORREALISTA MEJORADO
-    // ================================================================
-    import * as THREE from 'three';
-    import { EffectComposer } from 'three/addons/postprocessing/EffectComposer.js';
-    import { RenderPass } from 'three/addons/postprocessing/RenderPass.js';
-    import { UnrealBloomPass } from 'three/addons/postprocessing/UnrealBloomPass.js';
-    import { FilmPass } from 'three/addons/postprocessing/FilmPass.js';
-    import { ShaderPass } from 'three/addons/postprocessing/ShaderPass.js';
-    import { RGBShiftShader } from 'three/addons/shaders/RGBShiftShader.js';
-    
-    const container = document.getElementById('canvas-container');
-    const scene = new THREE.Scene();
-    scene.background = new THREE.Color(0x010014);
-    scene.fog = new THREE.FogExp2(0x010014, 0.00012);
-    
-    const camera = new THREE.PerspectiveCamera(50, window.innerWidth / window.innerHeight, 0.4, 4000);
-    camera.position.set(80, 70, 1150);
-    camera.lookAt(0, 20, -280);
-    
-    const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: false, powerPreference: "high-performance" });
-    renderer.setSize(window.innerWidth, window.innerHeight);
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-    renderer.toneMapping = THREE.ReinhardToneMapping;
-    renderer.toneMappingExposure = 1.3;
-    container.appendChild(renderer.domElement);
-    
-    // Postprocesamiento
-    const renderScene = new RenderPass(scene, camera);
-    const bloomPass = new UnrealBloomPass(new THREE.Vector2(window.innerWidth, window.innerHeight), 1.2, 0.4, 0.85);
-    bloomPass.threshold = 0.08;
-    bloomPass.strength = 0.7;
-    bloomPass.radius = 0.9;
-    const rgbShiftPass = new ShaderPass(RGBShiftShader);
-    rgbShiftPass.uniforms['amount'].value = 0.002;
-    rgbShiftPass.renderToScreen = false;
-    const filmPass = new FilmPass(0.2, 0.5, 2048, false);
-    filmPass.renderToScreen = true;
-    const effectComposer = new EffectComposer(renderer);
-    effectComposer.addPass(renderScene);
-    effectComposer.addPass(bloomPass);
-    effectComposer.addPass(rgbShiftPass);
-    effectComposer.addPass(filmPass);
-    rgbShiftPass.renderToScreen = false;
-    filmPass.renderToScreen = true;
-    
-    // ================================================================
-    // PLANETA FOTORREALISTA - TEXTURA PROCEDURAL MEJORADA
-    // ================================================================
-    
-    // Crear una textura de alta calidad para el planeta usando Canvas
-    const createPlanetTexture = () => {
-      const canvas = document.createElement('canvas');
-      canvas.width = 1024;
-      canvas.height = 1024;
-      const ctx = canvas.getContext('2d');
-      
-      // Fondo base azul profundo
-      ctx.fillStyle = '#1a3a6e';
-      ctx.fillRect(0, 0, canvas.width, canvas.height);
-      
-      // Manchas de color (simulando gas y terreno)
-      for (let i = 0; i < 280; i++) {
-        ctx.beginPath();
-        const x = Math.random() * canvas.width;
-        const y = Math.random() * canvas.height;
-        const radius = 15 + Math.random() * 55;
-        const opacity = 0.15 + Math.random() * 0.3;
-        const color = `rgba(${80 + Math.random() * 60}, ${100 + Math.random() * 80}, ${180 + Math.random() * 75}, ${opacity})`;
-        ctx.fillStyle = color;
-        ctx.ellipse(x, y, radius, radius * (0.5 + Math.random()), 0, 0, Math.PI * 2);
-        ctx.fill();
-      }
-      
-      // Vórtices y remolinos (simulando atmósfera)
-      for (let i = 0; i < 120; i++) {
-        ctx.beginPath();
-        const x = Math.random() * canvas.width;
-        const y = Math.random() * canvas.height;
-        ctx.fillStyle = `rgba(200, 220, 255, ${0.1 + Math.random() * 0.2})`;
-        ctx.ellipse(x, y, 40 + Math.random() * 80, 20 + Math.random() * 40, Math.random() * Math.PI, 0, Math.PI * 2);
-        ctx.fill();
-      }
-      
-      // Detalles de ruido
-      const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
-      const data = imageData.data;
-      for (let i = 0; i < data.length; i += 4) {
-        if (Math.random() > 0.92) {
-          data[i] = Math.min(255, data[i] + 30);
-          data[i+1] = Math.min(255, data[i+1] + 20);
-          data[i+2] = Math.min(255, data[i+2] + 40);
-        }
-      }
-      ctx.putImageData(imageData, 0, 0);
-      
-      const texture = new THREE.CanvasTexture(canvas);
-      texture.wrapS = THREE.RepeatWrapping;
-      texture.wrapT = THREE.RepeatWrapping;
-      texture.repeat.set(2, 1);
-      return texture;
-    };
-    
-    const createCloudTexture = () => {
-      const canvas = document.createElement('canvas');
-      canvas.width = 1024;
-      canvas.height = 1024;
-      const ctx = canvas.getContext('2d');
-      ctx.fillStyle = '#000000';
-      ctx.fillRect(0, 0, canvas.width, canvas.height);
-      
-      for (let i = 0; i < 800; i++) {
-        ctx.beginPath();
-        const x = Math.random() * canvas.width;
-        const y = Math.random() * canvas.height;
-        const radius = 8 + Math.random() * 35;
-        const opacity = 0.1 + Math.random() * 0.4;
-        ctx.fillStyle = `rgba(255, 255, 255, ${opacity})`;
-        ctx.ellipse(x, y, radius, radius * (0.4 + Math.random()), Math.random() * Math.PI, 0, Math.PI * 2);
-        ctx.fill();
-      }
-      const texture = new THREE.CanvasTexture(canvas);
-      texture.wrapS = THREE.RepeatWrapping;
-      texture.wrapT = THREE.RepeatWrapping;
-      texture.repeat.set(3, 1);
-      return texture;
-    };
-    
-    const planetTexture = createPlanetTexture();
-    const cloudTexture = createCloudTexture();
-    
-    // Planeta principal con material mejorado
-    const corePlanetGeo = new THREE.SphereGeometry(155, 256, 256);
-    const coreMat = new THREE.MeshStandardMaterial({
-      map: planetTexture,
-      color: 0x3d6cb0,
-      emissive: 0x112c55,
-      emissiveIntensity: 0.35,
-      roughness: 0.45,
-      metalness: 0.65,
-      bumpScale: 0.3
-    });
-    const corePlanet = new THREE.Mesh(corePlanetGeo, coreMat);
-    corePlanet.position.set(-340, -40, -620);
-    scene.add(corePlanet);
-    
-    // Capa de nubes semitransparente
-    const cloudGeo = new THREE.SphereGeometry(158, 256, 256);
-    const cloudMat = new THREE.MeshPhongMaterial({
-      map: cloudTexture,
-      transparent: true,
-      opacity: 0.18,
-      blending: THREE.AdditiveBlending
-    });
-    const clouds = new THREE.Mesh(cloudGeo, cloudMat);
-    corePlanet.add(clouds);
-    
-    // Atmósfera exterior (glow)
-    const atmosGeo = new THREE.SphereGeometry(163, 128, 128);
-    const atmosMat = new THREE.MeshPhongMaterial({
-      color: 0x4488cc,
-      transparent: true,
-      opacity: 0.09,
-      side: THREE.BackSide
-    });
-    const atmosphere = new THREE.Mesh(atmosGeo, atmosMat);
-    corePlanet.add(atmosphere);
-    
-    // Anillos mejorados (más detallados)
-    const ringTexture = (() => {
-      const canvas = document.createElement('canvas');
-      canvas.width = 512;
-      canvas.height = 512;
-      const ctx = canvas.getContext('2d');
-      ctx.fillStyle = '#000';
-      ctx.fillRect(0, 0, canvas.width, canvas.height);
-      for (let i = 0; i < 3000; i++) {
-        const x = Math.random() * canvas.width;
-        const y = Math.random() * canvas.height;
-        const alpha = 0.1 + Math.random() * 0.5;
-        ctx.fillStyle = `rgba(180, 200, 255, ${alpha})`;
-        ctx.fillRect(x, y, 1.5, 1.5);
-      }
-      return new THREE.CanvasTexture(canvas);
-    })();
-    
-    const ringA = new THREE.Mesh(
-      new THREE.TorusGeometry(218, 24, 160, 500),
-      new THREE.MeshStandardMaterial({ map: ringTexture, color: 0x7a9fdf, emissive: 0x2266aa, side: THREE.DoubleSide, transparent: true, opacity: 0.75 })
-    );
-    ringA.rotation.x = Math.PI / 2.25;
-    ringA.rotation.z = 0.42;
-    corePlanet.add(ringA);
-    
-    const ringB = new THREE.Mesh(
-      new THREE.TorusGeometry(250, 12, 128, 500),
-      new THREE.MeshStandardMaterial({ color: 0x8aafff, emissive: 0x2a6abb, transparent: true, opacity: 0.6, side: THREE.DoubleSide })
-    );
-    ringB.rotation.x = Math.PI / 2.15;
-    ringB.rotation.z = -0.25;
-    corePlanet.add(ringB);
-    
-    const ringC = new THREE.Mesh(
-      new THREE.TorusGeometry(278, 7, 96, 500),
-      new THREE.MeshStandardMaterial({ color: 0xaaccff, emissive: 0x3377cc, transparent: true, opacity: 0.45, side: THREE.DoubleSide })
-    );
-    ringC.rotation.x = Math.PI / 2.1;
-    ringC.rotation.z = 0.15;
-    corePlanet.add(ringC);
-    
-    // Lunas y asteroides (mantener)
-    const moonObj = new THREE.Mesh(new THREE.SphereGeometry(48, 128, 128), new THREE.MeshStandardMaterial({ color: 0xbc9a6c, roughness: 0.55, metalness: 0.3, emissive: 0x331100, emissiveIntensity: 0.12 }));
-    moonObj.position.set(540, 110, -800);
-    scene.add(moonObj);
-    
-    const moonlet = new THREE.Mesh(new THREE.SphereGeometry(28, 64, 64), new THREE.MeshStandardMaterial({ color: 0xaa8866, roughness: 0.6 }));
-    moonlet.position.set(-480, 180, -500);
-    scene.add(moonlet);
-    
-    // Estrellas (capas)
-    const starLayerHeavy = new THREE.BufferGeometry();
-    const starCountHeavy = 6500;
-    const starHeavyPos = new Float32Array(starCountHeavy * 3);
-    for (let i = 0; i < starCountHeavy; i++) {
-      starHeavyPos[i*3] = (Math.random() - 0.5) * 3500;
-      starHeavyPos[i*3+1] = (Math.random() - 0.5) * 2400;
-      starHeavyPos[i*3+2] = (Math.random() - 0.5) * 2000 - 600;
+<script>
+/* SCROLL NAV */
+function go(i){
+  document.querySelectorAll("section")[i].scrollIntoView({behavior:"smooth"});
+}
+
+/* COPY EMAIL */
+function copy(){
+  navigator.clipboard.writeText("studio@nebulacore.space");
+  alert("Correo copiado ✅");
+}
+
+/* ANIMACIÓN SCROLL */
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(e => { if(e.isIntersecting) e.target.classList.add("show"); });
+});
+document.querySelectorAll(".fade").forEach(el => observer.observe(el));
+
+/* ====================== CHAT IA CON GEMINI (INTELIGENTE Y REAL) ====================== */
+const GEMINI_API_KEY = "AIzaSyAvF5DjwOTDJ8KiOS1Hyd_vVocacI6Hi3c";   // ←←← PEGA AQUÍ TU API KEY DE GOOGLE GEMINI
+
+let conversationHistory = [];
+let chatInitialized = false;
+const ownerWhatsApp = "+51 914048072"; // ← Cambia por tu número real de WhatsApp (con código de país)
+
+function toggleChat() {
+  const win = document.getElementById('chatWindow');
+  win.style.display = (win.style.display === 'flex') ? 'none' : 'flex';
+  
+  if (!chatInitialized) {
+    setTimeout(() => {
+      addMessage("🌌 ¡Hola! Soy Nebula AI", 'ai');
+    }, 500);
+    chatInitialized = true;
+  }
+}
+
+function addMessage(text, type) {
+  const container = document.getElementById('chatMessages');
+  const div = document.createElement('div');
+  div.className = `message ${type}`;
+  div.textContent = text;
+  container.appendChild(div);
+  container.scrollTop = container.scrollHeight;
+}
+
+function showTyping() {
+  const container = document.getElementById('chatMessages');
+  const typingDiv = document.createElement('div');
+  typingDiv.id = 'typingIndicator';
+  typingDiv.className = 'typing';
+  typingDiv.textContent = 'Nebula AI está pensando...';
+  container.appendChild(typingDiv);
+  container.scrollTop = container.scrollHeight;
+  return typingDiv;
+}
+
+function removeTyping() {
+  const typing = document.getElementById('typingIndicator');
+  if (typing) typing.remove();
+}
+
+async function sendMessage() {
+  const input = document.getElementById('chatInput');
+  const text = input.value.trim();
+  if (!text || !GEMINI_API_KEY || GEMINI_API_KEY === "TU_CLAVE_AQUI") {
+    if (!GEMINI_API_KEY || GEMINI_API_KEY === "TU_CLAVE_AQUI") {
+      alert("Por favor, pega tu API Key de Gemini en el código antes de usar el chat.");
     }
-    starLayerHeavy.setAttribute('position', new THREE.BufferAttribute(starHeavyPos, 3));
-    const starsHeavy = new THREE.Points(starLayerHeavy, new THREE.PointsMaterial({ color: 0xffffff, size: 0.55, transparent: true, opacity: 0.85 }));
-    scene.add(starsHeavy);
-    
-    const starMid = new THREE.BufferGeometry();
-    const starMidCount = 5000;
-    const starMidPos = new Float32Array(starMidCount * 3);
-    for (let i = 0; i < starMidCount; i++) {
-      starMidPos[i*3] = (Math.random() - 0.5) * 4200;
-      starMidPos[i*3+1] = (Math.random() - 0.5) * 2800;
-      starMidPos[i*3+2] = (Math.random() - 0.5) * 2200 - 800;
-    }
-    starMid.setAttribute('position', new THREE.BufferAttribute(starMidPos, 3));
-    const starsMidLayer = new THREE.Points(starMid, new THREE.PointsMaterial({ color: 0xaaccff, size: 0.38 }));
-    scene.add(starsMidLayer);
-    
-    // Iluminación
-    const ambient = new THREE.AmbientLight(0x221c55, 0.58);
-    scene.add(ambient);
-    const dirLight = new THREE.DirectionalLight(0xfff5e6, 1.4);
-    dirLight.position.set(550, 480, 380);
-    scene.add(dirLight);
-    const fillLightBlue = new THREE.PointLight(0x4488ff, 0.85);
-    fillLightBlue.position.set(-280, 150, 350);
-    scene.add(fillLightBlue);
-    const rimLight = new THREE.PointLight(0xffaa77, 0.75);
-    rimLight.position.set(220, 120, -750);
-    scene.add(rimLight);
-    
-    // Animación
-    let cometAngle = 0;
-    function animateUniverse() {
-      requestAnimationFrame(animateUniverse);
-      const t = performance.now() * 0.0006;
-      
-      corePlanet.rotation.y += 0.0012;
-      corePlanet.rotation.x = Math.sin(t * 0.18) * 0.03;
-      clouds.rotation.y += 0.0008;
-      ringA.rotation.z += 0.0012;
-      ringB.rotation.x += 0.0009;
-      ringC.rotation.z += 0.0007;
-      
-      moonObj.position.x = 540 + Math.sin(t * 0.48) * 48;
-      moonObj.position.z = -800 + Math.cos(t * 0.52) * 52;
-      moonlet.position.x = -480 + Math.sin(t * 0.35) * 55;
-      moonlet.position.z = -500 + Math.cos(t * 0.4) * 45;
-      
-      starsHeavy.rotation.y += 0.00007;
-      starsMidLayer.rotation.x += 0.00005;
-      
-      camera.position.x += (Math.sin(t * 0.12) * 8 - camera.position.x) * 0.008;
-      camera.position.y += (Math.cos(t * 0.15) * 5 - camera.position.y) * 0.008;
-      camera.lookAt(0, 25, -280);
-      
-      rgbShiftPass.uniforms['amount'].value = 0.0015 + Math.sin(t * 0.5) * 0.0008;
-      effectComposer.render();
-    }
-    animateUniverse();
-    
-    window.addEventListener('resize', () => {
-      camera.aspect = window.innerWidth / window.innerHeight;
-      camera.updateProjectionMatrix();
-      renderer.setSize(window.innerWidth, window.innerHeight);
-      effectComposer.setSize(window.innerWidth, window.innerHeight);
-    });
-    
-    // ================================================================
-    // NAVEGACIÓN DIRECTA AL CONTENIDO (no solo al inicio de la pestaña)
-    // ================================================================
-    function openTab(index) {
-      const tabs = document.querySelectorAll('.tab');
-      const buttons = document.querySelectorAll('.menu button');
-      
-      tabs.forEach((tab, i) => {
-        if (i === index) tab.classList.add('active');
-        else tab.classList.remove('active');
-      });
-      
-      buttons.forEach((btn, i) => {
-        if (i === index) btn.classList.add('active-nav');
-        else btn.classList.remove('active-nav');
-      });
-      
-      // Obtener el elemento de la pestaña activa
-      const activeTab = tabs[index];
-      if (activeTab) {
-        // Buscar el primer elemento con altura significativa dentro de la pestaña
-        const targetElement = activeTab.querySelector('h2, .hero, .grid-ultra, .gallery-cinema, .testimonial-grid, .timeline, .contact-premium');
-        if (targetElement) {
-          targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        } else {
-          activeTab.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        }
-      }
-    }
-    
-    document.querySelectorAll('.menu button').forEach((btn, idx) => {
-      btn.addEventListener('click', (e) => {
-        e.preventDefault();
-        openTab(idx);
-      });
-    });
-    
-    window.copyProfessionalContact = function() {
-      const email = "studio@nebulacore.space";
-      navigator.clipboard.writeText(email);
-      const msgSpan = document.getElementById('copySuccessMsg');
-      if (msgSpan) {
-        msgSpan.innerText = "✓ Dirección copiada al portapapeles";
-        setTimeout(() => { msgSpan.innerText = ""; }, 2000);
-      }
-    };
-    
-    document.getElementById('copyProBtn')?.addEventListener('click', copyProfessionalContact);
-    console.log("NEBULA CORE v4.0 — Planeta fotorrealista + navegación directa al contenido");
-  </script>
+    return;
+  }
+
+  addMessage(text, 'user');
+  conversationHistory.push({role: "user", content: text});
+  input.value = '';
+
+  const typingIndicator = showTyping();
+
+  try {
+    const response = await getGeminiResponse(text);
+    removeTyping();
+    addMessage(response, 'ai');
+    conversationHistory.push({role: "assistant", content: response});
+  } catch (error) {
+    removeTyping();
+    addMessage("Lo siento, hubo un problema al conectar con la IA. Inténtalo de nuevo en unos segundos.", 'ai');
+  }
+}
+
+async function getGeminiResponse(query) {
+  const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${GEMINI_API_KEY}`;
+  
+  const systemPrompt = `Eres Nebula AI, un asistente experto, amigable y preciso de NEBULA CORE.`;
+
+  const payload = {
+    contents: [{
+      parts: [{
+        text: `${systemPrompt}\n\nPregunta del usuario: ${query}`
+      }]
+    }]
+  };
+
+  const res = await fetch(url, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(payload)
+  });
+
+  if (!res.ok) throw new Error("Error en la API");
+
+  const data = await res.json();
+  return data.candidates?.[0]?.content?.parts?.[0]?.text || "No pude generar una respuesta en este momento. ¿Puedes intentarlo de nuevo?";
+}
+
+/* Enviar número al WhatsApp */
+function requestPhone() {
+  const phone = prompt("📱 Ingresa tu número completo con código de país (ejemplo: +51 987654321):");
+  if (!phone || !phone.trim()) return;
+  
+  const cleanPhone = phone.trim();
+  const messageText = `🚀 Nuevo contacto desde NEBULA CORE\nNúmero: ${cleanPhone}\nInteresado en el proyecto.`;
+  
+  const waUrl = `https://wa.me/${ownerWhatsApp}?text=${encodeURIComponent(messageText)}`;
+  window.open(waUrl, '_blank');
+  
+  addMessage(`✅ Tu número ha sido enviado correctamente. ¡Te contactaremos pronto por WhatsApp!`, 'ai');
+}
+</script>
+
 </body>
 </html>
