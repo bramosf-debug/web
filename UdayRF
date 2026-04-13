@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NEBULA CORE | Experiencia Inmersiva</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;600;800&display=swap" rel="stylesheet">
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{
+  font-family:'Space Grotesk',sans-serif;
+  background: linear-gradient(rgba(2,2,10,0.88), rgba(2,2,10,0.88)), url('https://picsum.photos/seed/nebula-core/1920/1080') center/cover no-repeat fixed;
+  color:white;
+  overflow-x:hidden;
+}
+
+/* NAV */
+.navbar{
+  position:fixed;
+  top:20px;
+  left:50%;
+  transform:translateX(-50%);
+  display:flex;
+  gap:10px;
+  padding:10px 20px;
+  border-radius:50px;
+  backdrop-filter:blur(20px);
+  background:rgba(0,0,20,0.4);
+  z-index:1000;
+}
+.navbar button{
+  background:none;
+  border:none;
+  color:white;
+  padding:8px 14px;
+  border-radius:20px;
+  cursor:pointer;
+}
+.navbar button:hover{
+  background:rgba(100,150,255,0.2);
+}
+
+/* HERO */
+.hero{
+  height:100vh;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  flex-direction:column;
+  text-align:center;
+}
+.title{
+  font-size:5rem;
+  background:linear-gradient(45deg,#fff,#6ea8ff);
+  -webkit-background-clip:text;
+  color:transparent;
+}
+.tag{
+  opacity:.7;
+  margin-top:10px;
+}
+
+/* SECTIONS */
+section{
+  padding:100px 10%;
+  min-height:100vh;
+}
+
+/* CARDS */
+.grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
+  gap:20px;
+}
+.card{
+  background:rgba(20,30,60,0.4);
+  padding:20px;
+  border-radius:20px;
+  transition:.3s;
+}
+.card:hover{
+  transform:translateY(-10px);
+  box-shadow:0 10px 30px rgba(0,0,0,.5);
+}
+
+/* GALLERY */
+.gallery img{
+  width:100%;
+  border-radius:15px;
+  transition:.3s;
+}
+.gallery img:hover{
+  transform:scale(1.05);
+}
+
+/* CONTACT */
+.contact{
+  text-align:center;
+}
+button.copy{
+  margin-top:20px;
+  padding:10px 20px;
+  border:none;
+  border-radius:30px;
+  cursor:pointer;
+  background:#3a6cff;
+  color:white;
+}
+
+/* ANIMACIONES */
+.fade{
+  opacity:0;
+  transform:translateY(30px);
+  transition:1s;
+}
+.fade.show{
+  opacity:1;
+  transform:translateY(0);
+}
+
+/* CHAT IA */
+.chat-btn {
+  position: fixed;
+  bottom: 40px;
+  right: 40px;
+  background: linear-gradient(45deg, #3a6cff, #6ea8ff);
+  color: white;
+  width: 68px;
+  height: 68px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2.2rem;
+  box-shadow: 0 15px 35px rgba(58,108,255,0.5);
+  z-index: 9999;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+.chat-btn:hover {
+  transform: scale(1.12) rotate(12deg);
+}
+
+.chat-window {
+  position: fixed;
+  bottom: 125px;
+  right: 30px;
+  width: 420px;
+  height: 620px;
+  background: rgba(10,15,35,0.97);
+  border-radius: 24px;
+  overflow: hidden;
+  box-shadow: 0 25px 70px rgba(0,0,0,0.8);
+  display: none;
+  flex-direction: column;
+  z-index: 10000;
+  border: 1px solid rgba(110,168,255,0.3);
+}
+
+.chat-header {
+  background: linear-gradient(90deg, #02020a, #1a2a5e);
+  padding: 18px 22px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.chat-header h3 {
+  margin: 0;
+  font-size: 1.3rem;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.chat-messages {
+  flex: 1;
+  padding: 22px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  background: rgba(0,0,0,0.3);
+}
+
+.message {
+  max-width: 85%;
+  padding: 14px 20px;
+  border-radius: 22px;
+  font-size: 1.05rem;
+  line-height: 1.45;
+}
+.message.user {
+  align-self: flex-end;
+  background: linear-gradient(45deg, #3a6cff, #6ea8ff);
+  color: white;
+  border-bottom-right-radius: 6px;
+}
+.message.ai {
+  align-self: flex-start;
+  background: rgba(255,255,255,0.13);
+  color: white;
+  border-bottom-left-radius: 6px;
+}
+
+.typing {
+  align-self: flex-start;
+  background: rgba(255,255,255,0.1);
+  padding: 14px 20px;
+  border-radius: 22px;
+  font-style: italic;
+  color: rgba(255,255,255,0.7);
+}
+
+.chat-input {
+  padding: 16px 20px;
+  background: #02020a;
+  display: flex;
+  gap: 12px;
+  border-top: 1px solid rgba(255,255,255,0.1);
+}
+.chat-input input {
+  flex: 1;
+  padding: 14px 24px;
+  border: none;
+  border-radius: 50px;
+  background: rgba(255,255,255,0.1);
+  color: white;
+  font-size: 1.05rem;
+}
+.chat-input input:focus {
+  outline: none;
+  background: rgba(255,255,255,0.15);
+}
+.chat-input button {
+  background: #3a6cff;
+  border: none;
+  color: white;
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.7rem;
+  cursor: pointer;
+  transition: 0.2s;
+}
+.chat-input button:hover {
+  background: #6ea8ff;
+  transform: scale(1.1);
+}
+
+.phone-btn-container {
+  padding: 12px 22px 20px;
+  background: #02020a;
+  text-align: center;
+  border-top: 1px solid rgba(255,255,255,0.1);
+}
+.phone-btn-container button {
+  background: #22c55e;
+  color: white;
+  border: none;
+  padding: 13px 28px;
+  border-radius: 50px;
+  font-size: 1.05rem;
+  cursor: pointer;
+  width: 100%;
+  transition: 0.3s;
+}
+.phone-btn-container button:hover {
+  background: #16a34a;
+  transform: translateY(-2px);
+}
+</style>
+</head>
+
+<body>
+
+<!-- NAV -->
+<div class="navbar">
+<button onclick="go(0)">Inicio</button>
+<button onclick="go(1)">Historia</button>
+<button onclick="go(2)">Arte</button>
+<button onclick="go(3)">Galería</button>
+<button onclick="go(4)">Contacto</button>
+</div>
+
+<!-- HERO -->
+<section class="hero">
+<h1 class="title">NEBULA CORE</h1>
+<p class="tag">Tecnología · Arte · Futuro</p>
+</section>
+
+<!-- HISTORIA -->
+<section class="fade">
+<h2>Historia</h2>
+<div class="grid">
+<div class="card"><h3>Inicio</h3><p>Proyecto enfocado en experiencias digitales inmersivas usando WebGL y diseño avanzado.</p></div>
+<div class="card"><h3>Evolución</h3><p>Integración de 3D, animaciones y sistemas interactivos modernos.</p></div>
+<div class="card"><h3>Futuro</h3><p>Exploración de inteligencia artificial + gráficos en tiempo real.</p></div>
+</div>
+</section>
+
+<!-- ARTE -->
+<section class="fade">
+<h2>Arte Digital</h2>
+<div class="grid">
+<div class="card">Visuales generativos</div>
+<div class="card">Shaders avanzados</div>
+<div class="card">Experiencias inmersivas</div>
+</div>
+</section>
+
+<!-- GALERIA -->
+<section class="fade gallery">
+<h2>Galería</h2>
+<div class="grid">
+<img src="https://picsum.photos/500/300?1">
+<img src="https://picsum.photos/500/300?2">
+<img src="https://picsum.photos/500/300?3">
+<img src="https://picsum.photos/500/300?4">
+</div>
+</section>
+
+<!-- CONTACT -->
+<section class="fade contact">
+<h2>Contacto</h2>
+<p>studio@nebulacore.space</p>
+<button class="copy" onclick="copy()">Copiar correo</button>
+</section>
+
+<!-- CHAT IA -->
+<div class="chat-btn" onclick="toggleChat()" title="Habla con Nebula AI">🤖</div>
+
+<div class="chat-window" id="chatWindow">
+  <div class="chat-header">
+    <div style="display:flex; align-items:center; gap:10px;">
+      <span style="font-size:1.7rem;">🌌</span>
+      <h3>Nebula AI • Gemini</h3>
+    </div>
+    <button onclick="toggleChat()" style="background:none;border:none;color:white;font-size:1.9rem;cursor:pointer;">×</button>
+  </div>
+  
+  <div class="chat-messages" id="chatMessages"></div>
+  
+  <div class="chat-input">
+    <input type="text" id="chatInput" placeholder="Pregúntame cualquier cosa..." onkeypress="if(event.key==='Enter') sendMessage()">
+    <button onclick="sendMessage()">↑</button>
+  </div>
+  
+  <div class="phone-btn-container">
+    <button onclick="requestPhone()">
+      📱 Enviar mi número al WhatsApp
+    </button>
+  </div>
+</div>
+
+<script>
+/* SCROLL NAV */
+function go(i){
+  document.querySelectorAll("section")[i].scrollIntoView({behavior:"smooth"});
+}
+
+/* COPY EMAIL */
+function copy(){
+  navigator.clipboard.writeText("studio@nebulacore.space");
+  alert("Correo copiado ✅");
+}
+
+/* ANIMACIÓN SCROLL */
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(e => { if(e.isIntersecting) e.target.classList.add("show"); });
+});
+document.querySelectorAll(".fade").forEach(el => observer.observe(el));
+
+/* ====================== CHAT IA CON GEMINI (INTELIGENTE Y REAL) ====================== */
+const GEMINI_API_KEY = "AIzaSyAvF5DjwOTDJ8KiOS1Hyd_vVocacI6Hi3c";   // ←←← PEGA AQUÍ TU API KEY DE GOOGLE GEMINI
+
+let conversationHistory = [];
+let chatInitialized = false;
+const ownerWhatsApp = "+51 914048072"; // ← Cambia por tu número real de WhatsApp (con código de país)
+
+function toggleChat() {
+  const win = document.getElementById('chatWindow');
+  win.style.display = (win.style.display === 'flex') ? 'none' : 'flex';
+  
+  if (!chatInitialized) {
+    setTimeout(() => {
+      addMessage("🌌 ¡Hola! Soy Nebula AI", 'ai');
+    }, 500);
+    chatInitialized = true;
+  }
+}
+
+function addMessage(text, type) {
+  const container = document.getElementById('chatMessages');
+  const div = document.createElement('div');
+  div.className = `message ${type}`;
+  div.textContent = text;
+  container.appendChild(div);
+  container.scrollTop = container.scrollHeight;
+}
+
+function showTyping() {
+  const container = document.getElementById('chatMessages');
+  const typingDiv = document.createElement('div');
+  typingDiv.id = 'typingIndicator';
+  typingDiv.className = 'typing';
+  typingDiv.textContent = 'Nebula AI está pensando...';
+  container.appendChild(typingDiv);
+  container.scrollTop = container.scrollHeight;
+  return typingDiv;
+}
+
+function removeTyping() {
+  const typing = document.getElementById('typingIndicator');
+  if (typing) typing.remove();
+}
+
+async function sendMessage() {
+  const input = document.getElementById('chatInput');
+  const text = input.value.trim();
+  if (!text || !GEMINI_API_KEY || GEMINI_API_KEY === "TU_CLAVE_AQUI") {
+    if (!GEMINI_API_KEY || GEMINI_API_KEY === "TU_CLAVE_AQUI") {
+      alert("Por favor, pega tu API Key de Gemini en el código antes de usar el chat.");
+    }
+    return;
+  }
+
+  addMessage(text, 'user');
+  conversationHistory.push({role: "user", content: text});
+  input.value = '';
+
+  const typingIndicator = showTyping();
+
+  try {
+    const response = await getGeminiResponse(text);
+    removeTyping();
+    addMessage(response, 'ai');
+    conversationHistory.push({role: "assistant", content: response});
+  } catch (error) {
+    removeTyping();
+    addMessage("Lo siento, hubo un problema al conectar con la IA. Inténtalo de nuevo en unos segundos.", 'ai');
+  }
+}
+
+async function getGeminiResponse(query) {
+  const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${GEMINI_API_KEY}`;
+  
+  const systemPrompt = `Eres Nebula AI, un asistente experto, amigable y preciso de NEBULA CORE.`;
+
+  const payload = {
+    contents: [{
+      parts: [{
+        text: `${systemPrompt}\n\nPregunta del usuario: ${query}`
+      }]
+    }]
+  };
+
+  const res = await fetch(url, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(payload)
+  });
+
+  if (!res.ok) throw new Error("Error en la API");
+
+  const data = await res.json();
+  return data.candidates?.[0]?.content?.parts?.[0]?.text || "No pude generar una respuesta en este momento. ¿Puedes intentarlo de nuevo?";
+}
+
+/* Enviar número al WhatsApp */
+function requestPhone() {
+  const phone = prompt("📱 Ingresa tu número completo con código de país (ejemplo: +51 987654321):");
+  if (!phone || !phone.trim()) return;
+  
+  const cleanPhone = phone.trim();
+  const messageText = `🚀 Nuevo contacto desde NEBULA CORE\nNúmero: ${cleanPhone}\nInteresado en el proyecto.`;
+  
+  const waUrl = `https://wa.me/${ownerWhatsApp}?text=${encodeURIComponent(messageText)}`;
+  window.open(waUrl, '_blank');
+  
+  addMessage(`✅ Tu número ha sido enviado correctamente. ¡Te contactaremos pronto por WhatsApp!`, 'ai');
+}
+</script>
+
+</body>
+</html>
