@@ -2,8 +2,16 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>NEBULA CORE | Experiencia Inmersiva</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>NEBULA CORE PRO | IA · Arte · Futuro</title>
+<meta name="description" content="NEBULA CORE - Experiencia inmersiva con IA, arte digital y tecnología de vanguardia">
+<meta name="theme-color" content="#3a6cff">
+<meta name="keywords" content="IA, arte digital, tecnología, web3, realidad virtual">
+<meta name="author" content="NEBULA CORE">
+<meta property="og:title" content="NEBULA CORE">
+<meta property="og:description" content="Experiencia inmersiva con IA">
+<meta property="og:type" content="website">
+<meta property="og:image" content="https://images.unsplash.com/photo-1462331940025-496dfbfc7564?w=1200">
 
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;600;800&display=swap" rel="stylesheet">
 
@@ -11,12 +19,68 @@
 *{margin:0;padding:0;box-sizing:border-box}
 body{
   font-family:'Space Grotesk',sans-serif;
-  background: linear-gradient(rgba(2,2,10,0.88), rgba(2,2,10,0.88)), url('https://picsum.photos/seed/nebula-core/1920/1080') center/cover no-repeat fixed;
+  background: linear-gradient(rgba(2,2,10,0.85), rgba(2,2,10,0.85)), url('https://images.unsplash.com/photo-1462331940025-496dfbfc7564?w=1920&q=80') center/cover fixed;
   color:white;
   overflow-x:hidden;
+  transition: background 0.5s ease, color 0.3s ease;
 }
 
-/* NAV */
+/* Temas con fondos de alta calidad */
+body.neon {
+  background: linear-gradient(rgba(0,0,0,0.8), rgba(0,0,0,0.8)), url('https://images.unsplash.com/photo-1534796636912-3b95b3ab5986?w=1920&q=80') center/cover fixed;
+}
+body.neon .card {
+  box-shadow: 0 0 20px rgba(110,168,255,0.3);
+  border-color: rgba(110,168,255,0.5);
+}
+body.neon .message.ai {
+  background: rgba(110,168,255,0.15);
+  border-left: 3px solid #6ea8ff;
+}
+body.neon .navbar {
+  background: rgba(0,0,20,0.8);
+  box-shadow: 0 0 20px rgba(110,168,255,0.2);
+}
+body.neon .chat-window {
+  border-color: #6ea8ff;
+  box-shadow: 0 0 30px rgba(110,168,255,0.3);
+}
+
+body.light {
+  background: linear-gradient(rgba(240,248,255,0.92), rgba(240,248,255,0.92)), url('https://images.unsplash.com/photo-1502139214982-d0ad755818d8?w=1920&q=80') center/cover fixed;
+  color: #1a1a2e;
+}
+body.light .card {
+  background: rgba(255,255,255,0.9);
+  color: #1a1a2e;
+}
+body.light .navbar {
+  background: rgba(255,255,255,0.8);
+}
+body.light .navbar button {
+  color: #1a1a2e;
+}
+body.light .chat-window {
+  background: rgba(255,255,255,0.98);
+  color: #1a1a2e;
+}
+body.light .message.ai {
+  background: #e8e8e8;
+  color: #1a1a2e;
+}
+body.light .chat-input input {
+  background: rgba(0,0,0,0.08);
+  color: #1a1a2e;
+}
+body.light .chat-input input::placeholder {
+  color: #666;
+}
+body.light .footer {
+  background: #e0e0e0;
+  color: #1a1a2e;
+}
+
+/* Navbar */
 .navbar{
   position:fixed;
   top:20px;
@@ -24,11 +88,12 @@ body{
   transform:translateX(-50%);
   display:flex;
   gap:10px;
-  padding:10px 20px;
+  padding:12px 20px;
   border-radius:50px;
+  background:rgba(0,0,20,0.5);
   backdrop-filter:blur(20px);
-  background:rgba(0,0,20,0.4);
   z-index:1000;
+  transition: all 0.3s ease;
 }
 .navbar button{
   background:none;
@@ -37,12 +102,38 @@ body{
   padding:8px 14px;
   border-radius:20px;
   cursor:pointer;
+  transition: all 0.3s ease;
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 500;
 }
 .navbar button:hover{
-  background:rgba(100,150,255,0.2);
+  background:rgba(100,150,255,0.3);
+  transform: translateY(-2px);
 }
 
-/* HERO */
+/* Botón de tema flotante */
+.theme-toggle {
+  position: fixed;
+  bottom: 120px;
+  right: 30px;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background: linear-gradient(45deg, #3a6cff, #6ea8ff);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 9998;
+  transition: all 0.3s ease;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+  font-size: 1.5rem;
+}
+.theme-toggle:hover {
+  transform: scale(1.1) rotate(15deg);
+}
+
+/* Hero */
 .hero{
   height:100vh;
   display:flex;
@@ -50,440 +141,1133 @@ body{
   align-items:center;
   flex-direction:column;
   text-align:center;
+  position: relative;
+  overflow: hidden;
+}
+.hero::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: radial-gradient(circle at center, rgba(58,108,255,0.1) 0%, transparent 70%);
+  pointer-events: none;
 }
 .title{
   font-size:5rem;
-  background:linear-gradient(45deg,#fff,#6ea8ff);
+  background:linear-gradient(45deg,#fff,#6ea8ff,#3a6cff);
   -webkit-background-clip:text;
+  background-clip:text;
   color:transparent;
+  animation: fadeInUp 1s ease;
+  position: relative;
+  z-index: 1;
 }
 .tag{
   opacity:.7;
   margin-top:10px;
+  animation: fadeInUp 1s ease 0.3s both;
+  position: relative;
+  z-index: 1;
 }
 
-/* SECTIONS */
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Secciones */
 section{
   padding:100px 10%;
   min-height:100vh;
 }
+section h2 {
+  font-size: 2.5rem;
+  margin-bottom: 40px;
+  background: linear-gradient(135deg, #fff, #6ea8ff);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  display: inline-block;
+}
 
-/* CARDS */
+/* Grid y Cards */
 .grid{
   display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
-  gap:20px;
+  grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+  gap:25px;
 }
 .card{
-  background:rgba(20,30,60,0.4);
-  padding:20px;
+  background:rgba(20,30,60,0.5);
+  backdrop-filter: blur(10px);
+  padding:30px;
   border-radius:20px;
-  transition:.3s;
+  transition: all 0.4s ease;
+  border: 1px solid rgba(110,168,255,0.2);
+  cursor: pointer;
 }
 .card:hover{
   transform:translateY(-10px);
-  box-shadow:0 10px 30px rgba(0,0,0,.5);
+  box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+  border-color: rgba(110,168,255,0.5);
+}
+.card h3 {
+  margin-bottom: 15px;
+  font-size: 1.5rem;
+  color: #6ea8ff;
+}
+.card p {
+  opacity: 0.8;
+  line-height: 1.6;
 }
 
-/* GALLERY */
+/* Galería con imágenes mejoradas */
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 25px;
+}
 .gallery img{
   width:100%;
+  height: 250px;
+  object-fit: cover;
   border-radius:15px;
-  transition:.3s;
+  transition: all 0.4s ease;
+  cursor: pointer;
 }
 .gallery img:hover{
   transform:scale(1.05);
+  box-shadow: 0 15px 35px rgba(0,0,0,0.5);
 }
 
-/* CONTACT */
-.contact{
-  text-align:center;
+/* Contacto */
+.contact .card {
+  cursor: pointer;
 }
-button.copy{
-  margin-top:20px;
-  padding:10px 20px;
-  border:none;
-  border-radius:30px;
-  cursor:pointer;
-  background:#3a6cff;
-  color:white;
-}
-
-/* ANIMACIONES */
-.fade{
-  opacity:0;
-  transform:translateY(30px);
-  transition:1s;
-}
-.fade.show{
-  opacity:1;
-  transform:translateY(0);
-}
-
-/* CHAT IA */
-.chat-btn {
-  position: fixed;
-  bottom: 40px;
-  right: 40px;
-  background: linear-gradient(45deg, #3a6cff, #6ea8ff);
+.copy-btn {
+  margin-top: 20px;
+  padding: 12px 30px;
+  background: #3a6cff;
+  border: none;
+  border-radius: 30px;
   color: white;
-  width: 68px;
-  height: 68px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 2.2rem;
-  box-shadow: 0 15px 35px rgba(58,108,255,0.5);
-  z-index: 9999;
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 600;
   cursor: pointer;
   transition: all 0.3s ease;
 }
-.chat-btn:hover {
-  transform: scale(1.12) rotate(12deg);
+.copy-btn:hover {
+  background: #6ea8ff;
+  transform: translateY(-2px);
 }
 
-.chat-window {
-  position: fixed;
-  bottom: 125px;
-  right: 30px;
-  width: 420px;
-  height: 620px;
-  background: rgba(10,15,35,0.97);
-  border-radius: 24px;
-  overflow: hidden;
-  box-shadow: 0 25px 70px rgba(0,0,0,0.8);
-  display: none;
-  flex-direction: column;
+/* Footer */
+.footer{
+  padding:40px;
+  text-align:center;
+  background:#02020a;
+}
+
+/* ====================== CHAT MEJORADO ====================== */
+.chat-btn{
+  position:fixed;
+  bottom:30px;
+  right:30px;
+  width:70px;
+  height:70px;
+  border-radius:50%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:2rem;
+  background:linear-gradient(45deg,#3a6cff,#6ea8ff);
+  cursor:pointer;
+  box-shadow: 0 15px 35px rgba(58,108,255,0.5);
+  transition: all 0.3s ease;
+  z-index: 9999;
+}
+.chat-btn:hover{
+  transform: scale(1.12) rotate(8deg);
+}
+.chat-btn.has-unread::after {
+  content: '';
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  width: 20px;
+  height: 20px;
+  background: #ff4444;
+  border-radius: 50%;
+  border: 2px solid white;
+  animation: pulse 1s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.2); opacity: 0.7; }
+}
+
+.chat-window{
+  position:fixed;
+  bottom:120px;
+  right:30px;
+  width:420px;
+  height:650px;
+  background:rgba(10,15,35,0.98);
+  backdrop-filter: blur(20px);
+  border-radius:24px;
+  display:none;
+  flex-direction:column;
   z-index: 10000;
   border: 1px solid rgba(110,168,255,0.3);
+  box-shadow: 0 25px 70px rgba(0,0,0,0.8);
+  animation: slideInRight 0.3s ease;
 }
 
-.chat-header {
-  background: linear-gradient(90deg, #02020a, #1a2a5e);
-  padding: 18px 22px;
+@keyframes slideInRight {
+  from { opacity: 0; transform: translateX(50px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+.chat-header{
+  background: linear-gradient(135deg, #0a0f23, #1a2a5e);
+  padding:18px 22px;
+  border-radius: 24px 24px 0 0;
   display: flex;
-  align-items: center;
   justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid rgba(110,168,255,0.3);
 }
 .chat-header h3 {
-  margin: 0;
-  font-size: 1.3rem;
+  font-size: 1.2rem;
   display: flex;
   align-items: center;
   gap: 10px;
 }
-
-.chat-messages {
-  flex: 1;
-  padding: 22px;
-  overflow-y: auto;
+.chat-header-buttons {
   display: flex;
-  flex-direction: column;
-  gap: 16px;
-  background: rgba(0,0,0,0.3);
+  gap: 10px;
 }
-
-.message {
-  max-width: 85%;
-  padding: 14px 20px;
-  border-radius: 22px;
-  font-size: 1.05rem;
-  line-height: 1.45;
-}
-.message.user {
-  align-self: flex-end;
-  background: linear-gradient(45deg, #3a6cff, #6ea8ff);
-  color: white;
-  border-bottom-right-radius: 6px;
-}
-.message.ai {
-  align-self: flex-start;
-  background: rgba(255,255,255,0.13);
-  color: white;
-  border-bottom-left-radius: 6px;
-}
-
-.typing {
-  align-self: flex-start;
-  background: rgba(255,255,255,0.1);
-  padding: 14px 20px;
-  border-radius: 22px;
-  font-style: italic;
-  color: rgba(255,255,255,0.7);
-}
-
-.chat-input {
-  padding: 16px 20px;
-  background: #02020a;
-  display: flex;
-  gap: 12px;
-  border-top: 1px solid rgba(255,255,255,0.1);
-}
-.chat-input input {
-  flex: 1;
-  padding: 14px 24px;
-  border: none;
-  border-radius: 50px;
-  background: rgba(255,255,255,0.1);
-  color: white;
-  font-size: 1.05rem;
-}
-.chat-input input:focus {
-  outline: none;
-  background: rgba(255,255,255,0.15);
-}
-.chat-input button {
-  background: #3a6cff;
+.chat-header button {
+  background: none;
   border: none;
   color: white;
-  width: 52px;
-  height: 52px;
+  font-size: 1.2rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  width: 35px;
+  height: 35px;
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 1.7rem;
-  cursor: pointer;
-  transition: 0.2s;
 }
-.chat-input button:hover {
-  background: #6ea8ff;
+.chat-header button:hover {
+  background: rgba(255,255,255,0.1);
   transform: scale(1.1);
 }
 
+.chat-messages{
+  flex:1;
+  padding:20px;
+  overflow-y:auto;
+  display:flex;
+  flex-direction:column;
+  gap:12px;
+}
+
+/* Scrollbar personalizada */
+.chat-messages::-webkit-scrollbar {
+  width: 6px;
+}
+.chat-messages::-webkit-scrollbar-track {
+  background: rgba(255,255,255,0.05);
+  border-radius: 10px;
+}
+.chat-messages::-webkit-scrollbar-thumb {
+  background: #3a6cff;
+  border-radius: 10px;
+}
+
+.message{
+  padding:12px 18px;
+  border-radius:20px;
+  max-width:85%;
+  animation: messagePop 0.3s ease;
+  line-height: 1.45;
+  font-size: 0.95rem;
+  word-wrap: break-word;
+}
+
+@keyframes messagePop {
+  from { opacity: 0; transform: scale(0.9); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+.user{
+  background:linear-gradient(135deg, #3a6cff, #6ea8ff);
+  align-self:flex-end;
+  border-bottom-right-radius: 6px;
+}
+.ai{
+  background:rgba(255,255,255,0.12);
+  align-self:flex-start;
+  border-bottom-left-radius: 6px;
+}
+
+/* Indicador de escritura */
+.typing-indicator {
+  align-self: flex-start;
+  background: rgba(255,255,255,0.08);
+  padding: 12px 18px;
+  border-radius: 20px;
+  border-bottom-left-radius: 6px;
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+.typing-indicator span {
+  width: 8px;
+  height: 8px;
+  background: #6ea8ff;
+  border-radius: 50%;
+  display: inline-block;
+  animation: typingBounce 1.4s infinite;
+}
+.typing-indicator span:nth-child(2) { animation-delay: 0.2s; }
+.typing-indicator span:nth-child(3) { animation-delay: 0.4s; }
+
+@keyframes typingBounce {
+  0%, 60%, 100% { transform: translateY(0); opacity: 0.4; }
+  30% { transform: translateY(-10px); opacity: 1; }
+}
+
+/* Respuestas rápidas */
+.quick-replies {
+  display: flex;
+  gap: 8px;
+  padding: 10px;
+  flex-wrap: wrap;
+  border-top: 1px solid rgba(255,255,255,0.1);
+}
+.quick-reply-btn {
+  background: rgba(58,108,255,0.3);
+  border: 1px solid rgba(110,168,255,0.5);
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  color: white;
+  font-family: 'Space Grotesk', sans-serif;
+}
+.quick-reply-btn:hover {
+  background: #3a6cff;
+  transform: translateY(-2px);
+}
+
+/* Input del chat */
+.chat-input{
+  display:flex;
+  padding:16px 20px;
+  background: #02020a;
+  border-top: 1px solid rgba(255,255,255,0.1);
+  gap: 12px;
+}
+.chat-input input{
+  flex:1;
+  padding:14px 20px;
+  border:none;
+  border-radius:50px;
+  background:rgba(255,255,255,0.1);
+  color:white;
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 0.95rem;
+  transition: all 0.3s ease;
+}
+.chat-input input:focus{
+  outline:none;
+  background:rgba(255,255,255,0.15);
+  box-shadow: 0 0 0 2px rgba(110,168,255,0.3);
+}
+.chat-input input::placeholder {
+  color: rgba(255,255,255,0.5);
+}
+.chat-input button{
+  padding:12px 24px;
+  background:#3a6cff;
+  border:none;
+  border-radius:50px;
+  color:white;
+  cursor:pointer;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  font-family: 'Space Grotesk', sans-serif;
+}
+.chat-input button:hover:not(:disabled){
+  background:#6ea8ff;
+  transform: translateY(-2px);
+}
+.chat-input button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* WhatsApp button */
 .phone-btn-container {
-  padding: 12px 22px 20px;
+  padding: 12px 20px 20px;
   background: #02020a;
   text-align: center;
   border-top: 1px solid rgba(255,255,255,0.1);
 }
 .phone-btn-container button {
-  background: #22c55e;
+  background: linear-gradient(135deg, #22c55e, #16a34a);
   color: white;
   border: none;
-  padding: 13px 28px;
+  padding: 12px 24px;
   border-radius: 50px;
-  font-size: 1.05rem;
+  font-size: 0.9rem;
+  font-weight: 600;
   cursor: pointer;
   width: 100%;
-  transition: 0.3s;
+  transition: all 0.3s ease;
+  font-family: 'Space Grotesk', sans-serif;
 }
 .phone-btn-container button:hover {
-  background: #16a34a;
   transform: translateY(-2px);
+  box-shadow: 0 10px 25px rgba(34,197,94,0.3);
+}
+
+/* Toast notifications */
+.toast {
+  position: fixed;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(0,0,0,0.95);
+  color: white;
+  padding: 12px 24px;
+  border-radius: 50px;
+  z-index: 20000;
+  animation: toastIn 0.3s ease;
+  font-size: 0.9rem;
+  pointer-events: none;
+  font-family: 'Space Grotesk', sans-serif;
+  white-space: nowrap;
+}
+
+@keyframes toastIn {
+  from { opacity: 0; transform: translateX(-50%) translateY(20px); }
+  to { opacity: 1; transform: translateX(-50%) translateY(0); }
+}
+
+/* Animaciones scroll */
+.fade{
+  opacity:0;
+  transform:translateY(40px) scale(0.98);
+  transition:all .8s ease
+}
+.fade.show{
+  opacity:1;
+  transform:translateY(0) scale(1)
+}
+
+/* Partículas animadas en hero (opcional) */
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-20px); }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .navbar { gap: 5px; padding: 8px 12px; }
+  .navbar button { padding: 6px 10px; font-size: 0.8rem; }
+  .title { font-size: 2.5rem; }
+  section { padding: 80px 5%; }
+  section h2 { font-size: 1.8rem; }
+  .chat-window { width: calc(100vw - 40px); right: 20px; bottom: 100px; height: 70vh; }
+  .theme-toggle { bottom: 110px; width: 45px; height: 45px; font-size: 1.2rem; }
+  .chat-btn { width: 55px; height: 55px; font-size: 1.5rem; }
+  .toast { white-space: normal; text-align: center; max-width: 90vw; }
+  .gallery img { height: 200px; }
+}
+
+@media (max-width: 480px) {
+  .navbar { gap: 3px; padding: 6px 10px; }
+  .navbar button { padding: 4px 8px; font-size: 0.7rem; }
+  .grid { gap: 15px; }
+  .card { padding: 20px; }
+  .quick-reply-btn { font-size: 0.7rem; }
 }
 </style>
 </head>
 
 <body>
 
-<!-- NAV -->
 <div class="navbar">
 <button onclick="go(0)">Inicio</button>
 <button onclick="go(1)">Historia</button>
-<button onclick="go(2)">Arte</button>
-<button onclick="go(3)">Galería</button>
-<button onclick="go(4)">Contacto</button>
+<button onclick="go(2)">Servicios</button>
+<button onclick="go(3)">Arte</button>
+<button onclick="go(4)">Galería</button>
+<button onclick="go(5)">Contacto</button>
 </div>
 
-<!-- HERO -->
+<div class="theme-toggle" onclick="toggleTheme()" title="Cambiar tema">🎨</div>
+
 <section class="hero">
 <h1 class="title">NEBULA CORE</h1>
-<p class="tag">Tecnología · Arte · Futuro</p>
+<p class="tag">IA · Arte · Futuro</p>
 </section>
 
-<!-- HISTORIA -->
 <section class="fade">
-<h2>Historia</h2>
+<h2>📜 Historia</h2>
 <div class="grid">
-<div class="card"><h3>Inicio</h3><p>Proyecto enfocado en experiencias digitales inmersivas usando WebGL y diseño avanzado.</p></div>
-<div class="card"><h3>Evolución</h3><p>Integración de 3D, animaciones y sistemas interactivos modernos.</p></div>
-<div class="card"><h3>Futuro</h3><p>Exploración de inteligencia artificial + gráficos en tiempo real.</p></div>
+<div class="card">
+<h3>🚀 Inicio</h3>
+<p>NEBULA CORE nace como un proyecto revolucionario para fusionar inteligencia artificial con experiencias digitales inmersivas.</p>
+</div>
+<div class="card">
+<h3>⚡ Evolución</h3>
+<p>Integramos tecnologías de última generación: WebGL, animaciones 3D y sistemas interactivos avanzados.</p>
+</div>
+<div class="card">
+<h3>🌟 Futuro</h3>
+<p>Exploramos la convergencia entre IA generativa y gráficos en tiempo real para crear universos digitales únicos.</p>
+</div>
 </div>
 </section>
 
-<!-- ARTE -->
 <section class="fade">
-<h2>Arte Digital</h2>
+<h2>💎 Servicios</h2>
 <div class="grid">
-<div class="card">Visuales generativos</div>
-<div class="card">Shaders avanzados</div>
-<div class="card">Experiencias inmersivas</div>
+<div class="card">
+<h3>🌐 Desarrollo Web</h3>
+<p>Sitios web inmersivos con tecnologías modernas y diseño de vanguardia.</p>
+</div>
+<div class="card">
+<h3>🤖 IA personalizada</h3>
+<p>Soluciones de inteligencia artificial adaptadas a tus necesidades específicas.</p>
+</div>
+<div class="card">
+<h3>🎮 Experiencias 3D</h3>
+<p>Mundos virtuales interactivos y visuales generativos impresionantes.</p>
+</div>
 </div>
 </section>
 
-<!-- GALERIA -->
+<section class="fade">
+<h2>🎨 Arte Digital</h2>
+<div class="grid">
+<div class="card">
+<h3>✨ Visuales generativos</h3>
+<p>Algoritmos que crean arte único e irrepetible en tiempo real.</p>
+</div>
+<div class="card">
+<h3>🌈 Shaders avanzados</h3>
+<p>Efectos visuales hipnóticos que transforman la percepción digital.</p>
+</div>
+<div class="card">
+<h3>🕶️ XR</h3>
+<p>Realidad extendida para experiencias inmersivas sin precedentes.</p>
+</div>
+</div>
+</section>
+
 <section class="fade gallery">
-<h2>Galería</h2>
-<div class="grid">
-<img src="https://picsum.photos/500/300?1">
-<img src="https://picsum.photos/500/300?2">
-<img src="https://picsum.photos/500/300?3">
-<img src="https://picsum.photos/500/300?4">
+<h2>🖼️ Galería</h2>
+<div class="gallery-grid">
+<img src="https://images.unsplash.com/photo-1541701494587-cb58502866ab?w=500&h=300&fit=crop" alt="Arte digital 1" loading="lazy" onclick="openImageModal(this.src)">
+<img src="https://images.unsplash.com/photo-1541701494587-cb58502866ab?w=500&h=300&fit=crop&random=2" alt="Arte digital 2" loading="lazy" onclick="openImageModal(this.src)">
+<img src="https://images.unsplash.com/photo-1541701494587-cb58502866ab?w=500&h=300&fit=crop&random=3" alt="Arte digital 3" loading="lazy" onclick="openImageModal(this.src)">
+<img src="https://images.unsplash.com/photo-1541701494587-cb58502866ab?w=500&h=300&fit=crop&random=4" alt="Arte digital 4" loading="lazy" onclick="openImageModal(this.src)">
 </div>
 </section>
 
-<!-- CONTACT -->
 <section class="fade contact">
-<h2>Contacto</h2>
-<p>studio@nebulacore.space</p>
-<button class="copy" onclick="copy()">Copiar correo</button>
+<h2>📬 Contacto</h2>
+<div class="grid">
+<div class="card" onclick="copyEmail()">
+  <h3>📧 Email</h3>
+  <p>studio@nebulacore.space</p>
+  <small style="opacity:0.7;">(Haz clic para copiar)</small>
+</div>
+<div class="card" onclick="sendWhatsApp()">
+  <h3>💬 WhatsApp Business</h3>
+  <p>+51 914048072</p>
+  <small style="opacity:0.7;">(Haz clic para contactar)</small>
+</div>
+</div>
+<button class="copy-btn" onclick="copyEmail()">📋 Copiar correo electrónico</button>
 </section>
 
-<!-- CHAT IA -->
-<div class="chat-btn" onclick="toggleChat()" title="Habla con Nebula AI">🤖</div>
+<div class="footer">© 2026 NEBULA CORE | Tecnología · Arte · Futuro | Nivel: <span id="userLevel">1</span> ⭐ | XP: <span id="userXP">0</span></div>
+
+<div class="chat-btn" onclick="toggleChat()" id="chatBtn">🤖</div>
 
 <div class="chat-window" id="chatWindow">
-  <div class="chat-header">
-    <div style="display:flex; align-items:center; gap:10px;">
-      <span style="font-size:1.7rem;">🌌</span>
-      <h3>Nebula AI • Gemini</h3>
-    </div>
-    <button onclick="toggleChat()" style="background:none;border:none;color:white;font-size:1.9rem;cursor:pointer;">×</button>
+<div class="chat-header">
+  <h3>🌌 Nebula AI Pro</h3>
+  <div class="chat-header-buttons">
+    <button onclick="exportChat()" title="Exportar conversación">📥</button>
+    <button onclick="clearChat()" title="Limpiar chat">🗑️</button>
+    <button onclick="toggleChat()" title="Cerrar">×</button>
   </div>
-  
-  <div class="chat-messages" id="chatMessages"></div>
-  
-  <div class="chat-input">
-    <input type="text" id="chatInput" placeholder="Pregúntame cualquier cosa..." onkeypress="if(event.key==='Enter') sendMessage()">
-    <button onclick="sendMessage()">↑</button>
-  </div>
-  
-  <div class="phone-btn-container">
-    <button onclick="requestPhone()">
-      📱 Enviar mi número al WhatsApp
-    </button>
-  </div>
+</div>
+<div class="chat-messages" id="chatMessages"></div>
+<div class="quick-replies" id="quickReplies">
+  <button class="quick-reply-btn" onclick="sendQuickReply('¿Qué servicios ofrecen?')">💼 Servicios</button>
+  <button class="quick-reply-btn" onclick="sendQuickReply('Cuéntame sobre el arte digital')">🎨 Arte</button>
+  <button class="quick-reply-btn" onclick="sendQuickReply('¿Cómo contacto con ustedes?')">📞 Contacto</button>
+  <button class="quick-reply-btn" onclick="sendQuickReply('/help')">❓ Ayuda</button>
+</div>
+<div class="chat-input">
+<input id="chatInput" placeholder="Escribe tu mensaje... (/help para comandos)" onkeypress="if(event.key==='Enter') sendMessage()">
+<button onclick="sendMessage()" id="sendBtn">Enviar</button>
+</div>
+<div class="phone-btn-container">
+  <button onclick="sendWhatsApp()">
+    📱 Contactar por WhatsApp
+  </button>
+</div>
 </div>
 
 <script>
-/* SCROLL NAV */
-function go(i){
-  document.querySelectorAll("section")[i].scrollIntoView({behavior:"smooth"});
+// ====================== CONFIGURACIÓN ======================
+const PROXY_URL = "https://nebula-grok-proxy.uday-ramos5.workers.dev";
+const OWNER_WHATSAPP = "51914048072";
+let history = JSON.parse(localStorage.getItem("nebula_memory") || "[]");
+let unreadCount = 0;
+let userLevel = parseInt(localStorage.getItem("userLevel") || "1");
+let userXP = parseInt(localStorage.getItem("userXP") || "0");
+let soundEnabled = localStorage.getItem("soundEnabled") === "true";
+let typingSpeed = parseInt(localStorage.getItem("typingSpeed") || "20");
+let notificationsEnabled = localStorage.getItem("notificationsEnabled") !== "false";
+
+// Actualizar UI de nivel
+document.getElementById('userLevel').textContent = userLevel;
+document.getElementById('userXP').textContent = userXP;
+
+// ====================== FUNCIONES DE NIVEL Y XP ======================
+function addXP(amount) {
+  userXP += amount;
+  const xpNeeded = userLevel * 100;
+  if (userXP >= xpNeeded) {
+    userLevel++;
+    userXP -= xpNeeded;
+    showToast(`🎉 ¡Subiste al nivel ${userLevel}! 🎉`, 3000);
+    playSound('levelup');
+    if (notificationsEnabled && Notification.permission === 'granted') {
+      new Notification('🎉 NEBULA CORE', { body: `¡Felicidades! Alcanzaste el nivel ${userLevel}`, icon: 'https://images.unsplash.com/photo-1462331940025-496dfbfc7564?w=64' });
+    }
+  }
+  localStorage.setItem("userLevel", userLevel);
+  localStorage.setItem("userXP", userXP);
+  document.getElementById('userLevel').textContent = userLevel;
+  document.getElementById('userXP').textContent = userXP;
 }
 
-/* COPY EMAIL */
-function copy(){
-  navigator.clipboard.writeText("studio@nebulacore.space");
-  alert("Correo copiado ✅");
+// ====================== SONIDOS ======================
+function playSound(type) {
+  if (!soundEnabled) return;
+  try {
+    const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+    const oscillator = audioContext.createOscillator();
+    const gainNode = audioContext.createGain();
+    oscillator.connect(gainNode);
+    gainNode.connect(audioContext.destination);
+    
+    if (type === 'message') {
+      oscillator.frequency.value = 523.25;
+      gainNode.gain.value = 0.1;
+      oscillator.start();
+      oscillator.stop(audioContext.currentTime + 0.1);
+    } else if (type === 'levelup') {
+      oscillator.frequency.value = 659.25;
+      gainNode.gain.value = 0.15;
+      oscillator.start();
+      oscillator.stop(audioContext.currentTime + 0.3);
+    } else if (type === 'send') {
+      oscillator.frequency.value = 440;
+      gainNode.gain.value = 0.08;
+      oscillator.start();
+      oscillator.stop(audioContext.currentTime + 0.05);
+    }
+    setTimeout(() => audioContext.close(), 500);
+  } catch(e) { console.log('Audio no soportado'); }
 }
 
-/* ANIMACIÓN SCROLL */
-const observer = new IntersectionObserver(entries => {
-  entries.forEach(e => { if(e.isIntersecting) e.target.classList.add("show"); });
-});
-document.querySelectorAll(".fade").forEach(el => observer.observe(el));
-
-/* ====================== CHAT IA CON GEMINI (INTELIGENTE Y REAL) ====================== */
-const GEMINI_API_KEY = "";   // ←←← PEGA AQUÍ TU API KEY DE GOOGLE GEMINI
-
-let conversationHistory = [];
-let chatInitialized = false;
-const ownerWhatsApp = "+51 914048072"; // ← Cambia por tu número real de WhatsApp (con código de país)
-
-function toggleChat() {
-  const win = document.getElementById('chatWindow');
-  win.style.display = (win.style.display === 'flex') ? 'none' : 'flex';
-  
-  if (!chatInitialized) {
-    setTimeout(() => {
-      addMessage("🌌 ¡Hola! Soy Nebula AI", 'ai');
-    }, 500);
-    chatInitialized = true;
+// ====================== NOTIFICACIONES ======================
+function requestNotificationPermission() {
+  if ('Notification' in window && notificationsEnabled && Notification.permission === 'default') {
+    Notification.requestPermission();
   }
 }
 
-function addMessage(text, type) {
+function showNotification(title, body) {
+  if (notificationsEnabled && 'Notification' in window && Notification.permission === 'granted' && document.hidden) {
+    new Notification(title, { body, icon: 'https://images.unsplash.com/photo-1462331940025-496dfbfc7564?w=64' });
+    playSound('message');
+  }
+}
+
+// ====================== TOAST ======================
+function showToast(message, duration = 2000) {
+  const toast = document.createElement('div');
+  toast.className = 'toast';
+  toast.textContent = message;
+  document.body.appendChild(toast);
+  setTimeout(() => toast.remove(), duration);
+}
+
+// ====================== TEMAS ======================
+let currentTheme = localStorage.getItem('nebula_theme') || 'dark';
+
+function toggleTheme() {
+  const themes = ['dark', 'neon', 'light'];
+  const currentIndex = themes.indexOf(currentTheme);
+  currentTheme = themes[(currentIndex + 1) % themes.length];
+  localStorage.setItem('nebula_theme', currentTheme);
+  applyTheme();
+  showToast(`🎨 Tema cambiado a ${currentTheme}`);
+}
+
+function applyTheme() {
+  document.body.classList.remove('dark', 'neon', 'light');
+  document.body.classList.add(currentTheme);
+}
+applyTheme();
+
+// ====================== SCROLL ANIMATION ======================
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(e => { if(e.isIntersecting) e.target.classList.add("show") });
+}, { threshold: 0.1 });
+document.querySelectorAll(".fade").forEach(el => { observer.observe(el) });
+
+// ====================== FUNCIONES BÁSICAS ======================
+function go(i) { 
+  const sections = document.querySelectorAll("section");
+  if (sections[i]) {
+    sections[i].scrollIntoView({ behavior: "smooth" }); 
+  }
+}
+
+function copyEmail() {
+  navigator.clipboard.writeText("studio@nebulacore.space");
+  showToast("✅ Correo copiado al portapapeles");
+  addXP(5);
+}
+
+function openImageModal(src) {
+  const modal = window.open('', '_blank');
+  modal.document.write(`
+    <html>
+      <head><title>NEBULA CORE - Galería</title>
+      <style>
+        body{margin:0;display:flex;justify-content:center;align-items:center;min-height:100vh;background:#000;font-family:sans-serif;}
+        img{max-width:90vw;max-height:90vh;border-radius:10px;box-shadow:0 10px 40px rgba(0,0,0,0.5);}
+        button{position:fixed;top:20px;right:20px;padding:10px 20px;background:#3a6cff;border:none;border-radius:10px;color:white;cursor:pointer;}
+        button:hover{background:#6ea8ff;}
+      </style>
+      </head>
+      <body>
+        <button onclick="window.close()">Cerrar ✕</button>
+        <img src="${src}" alt="Galería">
+      </body>
+    </html>
+  `);
+}
+
+// ====================== CHAT ======================
+function toggleChat() {
+  const chat = document.getElementById("chatWindow");
+  const isVisible = chat.style.display === "flex";
+  
+  chat.style.display = isVisible ? "none" : "flex";
+  
+  if (!isVisible) {
+    unreadCount = 0;
+    document.getElementById('chatBtn').classList.remove('has-unread');
+    
+    if (document.getElementById("chatMessages").children.length === 0) {
+      loadMemory();
+      if (history.length === 0) {
+        addMessage("🌌 ¡Hola! Soy Nebula AI Pro, tu asistente inteligente. Puedes usar /help para ver comandos disponibles. ¿En qué puedo ayudarte hoy?", "ai");
+      }
+    }
+  }
+}
+
+function addMessage(text, type, save = true) {
   const container = document.getElementById('chatMessages');
   const div = document.createElement('div');
   div.className = `message ${type}`;
   div.textContent = text;
   container.appendChild(div);
-  container.scrollTop = container.scrollHeight;
+  div.scrollIntoView({ behavior: "smooth", block: "end" });
+  
+  if (type === 'ai' && document.getElementById('chatWindow').style.display !== 'flex') {
+    unreadCount++;
+    document.getElementById('chatBtn').classList.add('has-unread');
+    showNotification('Nebula AI', text.substring(0, 50) + (text.length > 50 ? '...' : ''));
+  }
+  
+  if (save && type === 'user') {
+    history.push({ text, type: "user" });
+    saveMemory();
+    addXP(3);
+    playSound('send');
+  } else if (save && type === 'ai') {
+    history.push({ text, type: "ai" });
+    saveMemory();
+  }
+  
+  return div;
+}
+
+function saveMemory() { 
+  localStorage.setItem("nebula_memory", JSON.stringify(history)); 
+}
+
+function loadMemory() { 
+  history.forEach(m => addMessage(m.text, m.type, false)); 
 }
 
 function showTyping() {
-  const container = document.getElementById('chatMessages');
-  const typingDiv = document.createElement('div');
-  typingDiv.id = 'typingIndicator';
-  typingDiv.className = 'typing';
-  typingDiv.textContent = 'Nebula AI está pensando...';
-  container.appendChild(typingDiv);
-  container.scrollTop = container.scrollHeight;
-  return typingDiv;
+  removeTyping();
+  const div = document.createElement("div");
+  div.id = "typing";
+  div.className = "typing-indicator";
+  div.innerHTML = "<span></span><span></span><span></span>";
+  document.getElementById("chatMessages").appendChild(div);
+  div.scrollIntoView({ behavior: "smooth", block: "end" });
 }
 
-function removeTyping() {
-  const typing = document.getElementById('typingIndicator');
-  if (typing) typing.remove();
+function removeTyping() { 
+  const t = document.getElementById("typing"); 
+  if (t) t.remove(); 
 }
 
+async function typeEffect(text) {
+  const div = document.createElement("div");
+  div.className = "message ai";
+  document.getElementById("chatMessages").appendChild(div);
+  
+  let i = 0;
+  let current = "";
+  const speed = typingSpeed;
+  
+  return new Promise((resolve) => {
+    const interval = setInterval(() => {
+      if (i < text.length) {
+        current += text[i];
+        div.textContent = current;
+        i++;
+        div.scrollIntoView({ behavior: "smooth", block: "end" });
+      } else {
+        clearInterval(interval);
+        resolve();
+      }
+    }, speed);
+  });
+}
+
+// ====================== COMANDOS ======================
+async function handleCommand(cmd) {
+  const [command, ...args] = cmd.slice(1).toLowerCase().split(' ');
+  
+  switch(command) {
+    case 'clear':
+      if (confirm('¿Estás seguro de que quieres limpiar el chat?')) {
+        document.getElementById('chatMessages').innerHTML = '';
+        history = [];
+        saveMemory();
+        addMessage("🧹 Chat limpiado correctamente. ¿En qué más puedo ayudarte?", "ai");
+      }
+      break;
+    case 'help':
+      addMessage(`📋 **Comandos disponibles de NEBULA CORE PRO**:
+━━━━━━━━━━━━━━━━━━━━━━
+🔹 /clear - Limpiar el chat
+🔹 /help - Mostrar esta ayuda
+🔹 /tema - Cambiar tema visual
+🔹 /exportar - Exportar conversación
+🔹 /nivel - Ver tu nivel y XP
+🔹 /sonido - Activar/desactivar sonidos
+🔹 /velocidad [lento|normal|rapido] - Ajustar velocidad
+🔹 /stats - Ver estadísticas detalladas
+🔹 /notificaciones - Activar/desactivar notificaciones
+━━━━━━━━━━━━━━━━━━━━━━
+💡 Consejo: Usa las respuestas rápidas para preguntas frecuentes`, "ai");
+      break;
+    case 'tema':
+      toggleTheme();
+      addMessage(`🎨 Tema cambiado a **${currentTheme}**`, "ai");
+      break;
+    case 'exportar':
+      exportChat();
+      break;
+    case 'nivel':
+      const xpNeeded = userLevel * 100;
+      addMessage(`🏆 **Tu progreso en NEBULA CORE**
+━━━━━━━━━━━━━━━━━━━━━━
+📊 Nivel actual: **${userLevel}**
+⭐ XP acumulada: **${userXP}/${xpNeeded}**
+💬 Mensajes enviados: ${history.filter(h => h.type === 'user').length}
+🎨 Tema activo: ${currentTheme}
+🔊 Sonidos: ${soundEnabled ? 'Activados' : 'Desactivados'}
+━━━━━━━━━━━━━━━━━━━━━━
+¡Sigue interactuando para subir de nivel!`, "ai");
+      break;
+    case 'sonido':
+      soundEnabled = !soundEnabled;
+      localStorage.setItem("soundEnabled", soundEnabled);
+      addMessage(`🔊 Sonidos ${soundEnabled ? 'activados' : 'desactivados'}`, "ai");
+      break;
+    case 'velocidad':
+      const speedOption = args[0];
+      if (speedOption === 'lento') typingSpeed = 40;
+      else if (speedOption === 'rapido') typingSpeed = 10;
+      else typingSpeed = 20;
+      localStorage.setItem("typingSpeed", typingSpeed);
+      addMessage(`⚡ Velocidad de escritura cambiada a **${speedOption || 'normal'}** (${typingSpeed}ms/letra)`, "ai");
+      break;
+    case 'stats':
+      const userMessages = history.filter(h => h.type === 'user').length;
+      const aiMessages = history.filter(h => h.type === 'ai').length;
+      const totalInteractions = userMessages + aiMessages;
+      const startDate = localStorage.getItem("nebula_start_date") || new Date().toISOString();
+      if (!localStorage.getItem("nebula_start_date")) localStorage.setItem("nebula_start_date", startDate);
+      
+      addMessage(`📊 **Estadísticas completas de NEBULA CORE**
+━━━━━━━━━━━━━━━━━━━━━━
+💬 Total mensajes: ${totalInteractions}
+👤 Tus mensajes: ${userMessages}
+🤖 Respuestas IA: ${aiMessages}
+🏆 Nivel actual: ${userLevel}
+⭐ XP total: ${userXP}
+🎨 Tema: ${currentTheme}
+🔊 Sonido: ${soundEnabled ? 'ON' : 'OFF'}
+⚡ Velocidad: ${typingSpeed}ms
+📅 Inicio: ${new Date(startDate).toLocaleDateString()}
+━━━━━━━━━━━━━━━━━━━━━━`, "ai");
+      break;
+    case 'notificaciones':
+      notificationsEnabled = !notificationsEnabled;
+      localStorage.setItem("notificationsEnabled", notificationsEnabled);
+      if (notificationsEnabled) requestNotificationPermission();
+      addMessage(`🔔 Notificaciones ${notificationsEnabled ? 'activadas' : 'desactivadas'}`, "ai");
+      break;
+    default:
+      addMessage(`❓ Comando **${cmd}** no reconocido. Usa **/help** para ver todos los comandos disponibles.`, "ai");
+  }
+}
+
+// ====================== EXPORTAR CHAT ======================
+function exportChat() {
+  const messages = Array.from(document.querySelectorAll('.message')).map(m => ({
+    type: m.classList.contains('user') ? 'Usuario' : 'Nebula AI',
+    text: m.textContent,
+    date: new Date().toISOString(),
+    nivel_usuario: userLevel
+  }));
+  
+  const exportData = {
+    export_date: new Date().toISOString(),
+    user_level: userLevel,
+    user_xp: userXP,
+    total_messages: messages.length,
+    messages: messages
+  };
+  
+  const dataStr = JSON.stringify(exportData, null, 2);
+  const blob = new Blob([dataStr], { type: 'application/json' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = `nebula-chat-${new Date().toISOString().slice(0,19).replace(/:/g, '-')}.json`;
+  a.click();
+  URL.revokeObjectURL(url);
+  
+  addMessage("📄 Conversación exportada exitosamente", "ai");
+  addXP(10);
+}
+
+function clearChat() {
+  if (confirm('¿Estás seguro de que quieres limpiar todo el historial del chat? Esta acción no se puede deshacer.')) {
+    document.getElementById('chatMessages').innerHTML = '';
+    history = [];
+    saveMemory();
+    addMessage("🧹 Chat limpiado completamente. ¿En qué puedo ayudarte?", "ai");
+  }
+}
+
+// ====================== ENVIAR MENSAJE ======================
 async function sendMessage() {
-  const input = document.getElementById('chatInput');
+  const btn = document.getElementById("sendBtn");
+  const input = document.getElementById("chatInput");
   const text = input.value.trim();
-  if (!text || !GEMINI_API_KEY || GEMINI_API_KEY === "TU_CLAVE_AQUI") {
-    if (!GEMINI_API_KEY || GEMINI_API_KEY === "TU_CLAVE_AQUI") {
-      alert("Por favor, pega tu API Key de Gemini en el código antes de usar el chat.");
-    }
+  
+  if (!text) return;
+  
+  // Detectar comandos
+  if (text.startsWith('/')) {
+    input.value = '';
+    await handleCommand(text);
+    input.focus();
     return;
   }
-
-  addMessage(text, 'user');
-  conversationHistory.push({role: "user", content: text});
-  input.value = '';
-
-  const typingIndicator = showTyping();
-
-  try {
-    const response = await getGeminiResponse(text);
-    removeTyping();
-    addMessage(response, 'ai');
-    conversationHistory.push({role: "assistant", content: response});
-  } catch (error) {
-    removeTyping();
-    addMessage("Lo siento, hubo un problema al conectar con la IA. Inténtalo de nuevo en unos segundos.", 'ai');
-  }
-}
-
-async function getGeminiResponse(query) {
-  const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${GEMINI_API_KEY}`;
   
-  const systemPrompt = `Eres Nebula AI, un asistente experto, amigable y preciso de NEBULA CORE.`;
-
-  const payload = {
-    contents: [{
-      parts: [{
-        text: `${systemPrompt}\n\nPregunta del usuario: ${query}`
-      }]
-    }]
-  };
-
-  const res = await fetch(url, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(payload)
-  });
-
-  if (!res.ok) throw new Error("Error en la API");
-
-  const data = await res.json();
-  return data.candidates?.[0]?.content?.parts?.[0]?.text || "No pude generar una respuesta en este momento. ¿Puedes intentarlo de nuevo?";
+  btn.disabled = true;
+  addMessage(text, "user");
+  input.value = "";
+  
+  showTyping();
+  
+  try {
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 30000);
+    
+    const res = await fetch(PROXY_URL, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ 
+        message: text, 
+        history: history.filter(h => h.type === "user" || h.type === "ai").slice(-15)
+      }),
+      signal: controller.signal
+    });
+    
+    clearTimeout(timeoutId);
+    
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    
+    const data = await res.json();
+    removeTyping();
+    
+    const reply = data.reply || "Lo siento, no pude procesar tu solicitud. Por favor, intenta de nuevo.";
+    await typeEffect(reply);
+    
+    history.push({ text: reply, type: "ai" });
+    saveMemory();
+    
+  } catch(e) {
+    removeTyping();
+    if (e.name === 'AbortError') {
+      addMessage("⏰ La solicitud ha tardado demasiado. Por favor, intenta de nuevo.", "ai");
+    } else {
+      addMessage("❌ Error de conexión con el servidor. Por favor, verifica tu conexión e intenta de nuevo.", "ai");
+    }
+    console.error("Error:", e);
+  }
+  
+  btn.disabled = false;
+  input.focus();
 }
 
-/* Enviar número al WhatsApp */
-function requestPhone() {
-  const phone = prompt("📱 Ingresa tu número completo con código de país (ejemplo: +51 987654321):");
+function sendQuickReply(text) {
+  document.getElementById("chatInput").value = text;
+  sendMessage();
+}
+
+// ====================== WHATSAPP INTEGRACIÓN ======================
+function sendWhatsApp() {
+  const phone = prompt("📱 Ingresa tu número completo con código de país:\nEjemplo: +51 987654321\n\nTu número será enviado de forma segura a nuestro equipo de soporte.");
+  
   if (!phone || !phone.trim()) return;
   
   const cleanPhone = phone.trim();
-  const messageText = `🚀 Nuevo contacto desde NEBULA CORE\nNúmero: ${cleanPhone}\nInteresado en el proyecto.`;
+  const userLevelInfo = userLevel;
+  const messageCount = history.filter(h => h.type === 'user').length;
   
-  const waUrl = `https://wa.me/${ownerWhatsApp}?text=${encodeURIComponent(messageText)}`;
+  const message = `🚀 *NUEVO CONTACTO - NEBULA CORE PRO*\n\n📱 *Número:* ${cleanPhone}\n🏆 *Nivel:* ${userLevelInfo}\n💬 *Mensajes enviados:* ${messageCount}\n📅 *Fecha:* ${new Date().toLocaleString()}\n\n✨ *Interesado en:* Chat IA - Demostración interactiva`;
+  
+  const waUrl = `https://wa.me/${OWNER_WHATSAPP}?text=${encodeURIComponent(message)}`;
   window.open(waUrl, '_blank');
   
-  addMessage(`✅ Tu número ha sido enviado correctamente. ¡Te contactaremos pronto por WhatsApp!`, 'ai');
+  addMessage(`✅ ¡Gracias ${cleanPhone}! Tu información ha sido enviada a nuestro equipo de ventas. Te contactaremos por WhatsApp en los próximos minutos.`, 'ai');
+  addXP(15);
 }
+
+// ====================== INDICADOR DE ESCRITURA DEL USUARIO ======================
+const chatInput = document.getElementById('chatInput');
+let userTypingTimeout;
+
+if (chatInput) {
+  chatInput.addEventListener('input', () => {
+    if (chatInput.value.length > 0 && !document.getElementById('userTyping')) {
+      const indicator = document.createElement('div');
+      indicator.id = 'userTyping';
+      indicator.className = 'typing-indicator';
+      indicator.innerHTML = '<span></span><span></span><span></span>';
+      indicator.style.alignSelf = 'flex-end';
+      indicator.style.opacity = '0.7';
+      document.getElementById('chatMessages').appendChild(indicator);
+      indicator.scrollIntoView({ behavior: "smooth", block: "end" });
+      
+      clearTimeout(userTypingTimeout);
+      userTypingTimeout = setTimeout(() => {
+        const ind = document.getElementById('userTyping');
+        if (ind) ind.remove();
+      }, 1500);
+    } else if (chatInput.value.length === 0) {
+      const indicator = document.getElementById('userTyping');
+      if (indicator) indicator.remove();
+    }
+  });
+}
+
+// ====================== INICIALIZACIÓN ======================
+requestNotificationPermission();
+
+// Health check del worker
+async function checkWorkerHealth() {
+  try {
+    const res = await fetch(PROXY_URL, { method: 'GET', signal: AbortSignal.timeout(5000) });
+    if (res.ok) {
+      console.log("✅ Worker de NEBULA CORE funcionando correctamente");
+    } else {
+      console.warn("⚠️ Worker respondiendo con error:", res.status);
+    }
+  } catch(e) {
+    console.warn("⚠️ Worker no disponible:", e.message);
+  }
+}
+checkWorkerHealth();
+
+// Atajos de teclado globales
+document.addEventListener('keydown', (e) => {
+  // Ctrl + K: Abrir/cerrar chat
+  if (e.ctrlKey && e.key === 'k') {
+    e.preventDefault();
+    toggleChat();
+  }
+  // Esc: Cerrar chat si está abierto
+  if (e.key === 'Escape' && document.getElementById('chatWindow').style.display === 'flex') {
+    toggleChat();
+  }
+  // Ctrl + L: Limpiar chat
+  if (e.ctrlKey && e.key === 'l') {
+    e.preventDefault();
+    if (confirm('¿Limpiar chat? (Ctrl+L)')) clearChat();
+  }
+});
+
+// Guardar fecha de inicio si no existe
+if (!localStorage.getItem("nebula_start_date")) {
+  localStorage.setItem("nebula_start_date", new Date().toISOString());
+}
+
+// Cargar preferencias guardadas
+if (localStorage.getItem("typingSpeed")) typingSpeed = parseInt(localStorage.getItem("typingSpeed"));
+if (localStorage.getItem("soundEnabled")) soundEnabled = localStorage.getItem("soundEnabled") === "true";
+if (localStorage.getItem("notificationsEnabled")) notificationsEnabled = localStorage.getItem("notificationsEnabled") !== "false";
+
+console.log("🚀 NEBULA CORE PRO - Versión 2.0 con Fondos Mejorados");
+console.log(`🎮 Nivel: ${userLevel} | XP: ${userXP}`);
+console.log(`🎨 Tema: ${currentTheme} | 🔊 Sonido: ${soundEnabled}`);
+console.log(`⚡ Velocidad escritura: ${typingSpeed}ms`);
 </script>
 
 </body>
